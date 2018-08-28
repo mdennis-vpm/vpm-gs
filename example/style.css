@@ -64,9 +64,14 @@ ul > li > a:hover {
   width: 100%;
   min-width: 100px;
   height: 45px;
-  background-color: #99DDAA;
+  background-color: #BBCCEE;
   font-weight: 900;
-  border: none;
+  border: 1px solid #FFFFFF;
+}
+
+.gse-container--controls > button:hover {
+  background-color: #99AACC;
+  cursor: pointer;
 }
 
 .gse-container--controls > button:not(:first-child) {
