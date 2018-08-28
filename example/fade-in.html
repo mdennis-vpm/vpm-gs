@@ -1,8 +1,32 @@
-<h1>Fade In</h1>
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
 
-<div class="container">
-  <div class="gs-fade-in">
-    <img src="http://via.placeholder.com/350x225">
-    <p>Lorem ipsum dolor sit amet</p>
+<body>
+  <h1>Fade In</h1>
+
+  <div class="gse-container">
+    <div class="gse-container--controls">
+      <button>RESET</button>
+      <button>PLAY</button>
+      <button>REPLAY</button>
+    </div>
+
+    <div class="gse-container--showcase">
+      <div class="gs-fade-in">
+        <img src="http://via.placeholder.com/350x225">
+        <p>Lorem ipsum dolor sit amet</p>
+      </div>
+    </div>
   </div>
-</div>
+
+  <!--JQuery-->
+  <script src="../js/jquery-3.3.1.min.js"></script>
+  <!--CDN link for TweenLite-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/TweenLite.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/easing/EasePack.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
+
+  <!--VPM Animation Library-->
+  <script src="../js/animation.js"></script>
+</body>

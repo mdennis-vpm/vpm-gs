@@ -112,7 +112,7 @@ var animationElements = [
     animDelay: 0.2
   },
   {
-    element: 'gs-flat-fade-in',
+    element: 'gs-fade-in',
     animTarget: "class",
     animOn: "scrollTo",
     animProps: flatFadeInOut,
