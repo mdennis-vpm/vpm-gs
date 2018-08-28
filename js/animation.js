@@ -189,6 +189,8 @@ function createAnimations(animationSets) {
 function runAnimations(animationSets) {
   animationSets.forEach(function(item) {
 
+    item.element.css("position", setElementPosition(item.element));
+
     // "onFocus" animation playback
     if (item.animOn === "focus" && item.animTarget === "id") {
       item.element.focus(function(){
@@ -223,6 +225,13 @@ function runAnimations(animationSets) {
       item.animation.reverse();
     }*/
   });
+}
+
+function setElementPosition(elem) {
+  if (elem.css("position") !== "relative" || "absolute") {
+    return "relative";
+  }
+  return;
 }
 
 function addAnimations(array) {
