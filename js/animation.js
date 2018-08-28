@@ -122,11 +122,12 @@ var animationElements = [
 ];
 
 var defaultAnimCount = animationElements.length;
+var renderedAnimationSets;
 
 // Create animation tweens
 function createAnimations(animationSets) {
   var obj;
-  var renderedAnimationSets = [];
+  renderedAnimationSets = [];
   animationSets.forEach(function(item, i) {
     // contextual events to trigger animations
     //console.log(i + " start");
