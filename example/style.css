@@ -2,11 +2,16 @@ body {
   background-color: #080810;
   color: #EEEEEE;
   font-family: helvetica, arial, sans-serif;
+  margin: 0;
 }
 
 h1 {
   font-weight: 200;
   text-align: center;
+  border-bottom: 1px solid #444444;
+  margin: 0 0 20px 0;
+  padding: 20px 0;
+  line-height: 1;
 }
 
 a {
@@ -40,13 +45,18 @@ ul > li > a:hover {
   background-color: #444455;
 }
 
-.gse-container {
-  display: block;
-  margin: 0 50px;
+.gse-return {
+  position: absolute;
+  top: 0;
+  margin: 25px;
+  font-weight: 600;
+  text-decoration: none;
 }
 
-.gse-container:after {
+.gse-container {
   clear: both;
+  display: flex;
+  margin: 0 50px;
 }
 
 .gse-container--controls {
@@ -83,4 +93,24 @@ ul > li > a:hover {
   border: 1px solid #444444;
   padding: 50px;
   float: left;
+  width: 100%;
+}
+
+.gse-description {
+  margin-top: 5px;
+  padding: 50px;
+  width: 100%;
+  background-color: #222233;
+  border: 1px solid #444444;
+}
+
+.gse-description > p {
+}
+
+.gse-description > p:first-child {
+  margin-top: 0;
+}
+
+.gse-description > p:last-child {
+  margin-bottom: 0;
 }
