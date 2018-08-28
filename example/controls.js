@@ -1,18 +1,21 @@
-function gseReset(id) {
+function gseReset() {
   renderedAnimationSets.forEach(function(item) {
+    item.animation.kill();
     item.animation.pause(0);
+    item.animation.delay(item.animDelay);
   });
 }
 
-function gsePlay(id) {
+function gsePlay() {
   renderedAnimationSets.forEach(function(item) {
-    item.animation.play();
+    TweenLite.delayedCall(item.animDelay, function(){item.animation.play()});
   });
 }
 
-function gseReplay(id) {
+function gseReplay() {
   renderedAnimationSets.forEach(function(item) {
-    item.animation.delay(0.25);
+    item.animation.kill();
+    item.animation.delay(item.animDelay);
     item.animation.restart(true, false);
   });
 }
