@@ -13,7 +13,7 @@
       <button onclick='gsePlay()'>PLAY</button>
       <button onclick='gseReplay()'>REPLAY</button>
     </div>
-    <div class="gse-container--showcase">
+    <div id="gse-container--showcase">
       <div class="gs-fade-in">
         <img src="http://via.placeholder.com/350x225/BBCCEE/080810?text=.gs-fade-in">
         <p>Lorem ipsum dolor sit amet</p>
@@ -32,9 +32,21 @@
     </div>
   </div>
 
+  <div class="gse-container">
+    <div id="gse-example">
+      <h3>This example raw HTML:</h3>
+      <div id="gse-strip">
+        <div class="gs-fade-in">
+          <img src="http://via.placeholder.com/350x225/BBCCEE/080810?text=.gs-fade-in">
+          <p>Lorem ipsum dolor sit amet</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!--JQuery-->
   <script src="../js/jquery-3.3.1.min.js"></script>
-  
+
   <!--CDN link for TweenLite-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/TweenLite.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/easing/EasePack.min.js"></script>

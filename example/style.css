@@ -14,6 +14,11 @@ h1 {
   line-height: 1;
 }
 
+h3 {
+  line-height: 1;
+  margin-top: 0;
+}
+
 a {
   color: #BBCCEE;
 }
@@ -105,7 +110,7 @@ ul > li > a[href=""] {
   margin-top: 15px;
 }
 
-.gse-container--showcase {
+#gse-container--showcase {
   background-color: #222233;
   border: 1px solid #444444;
   padding: 50px;
@@ -130,4 +135,17 @@ ul > li > a[href=""] {
 
 .gse-description > p:last-child {
   margin-bottom: 0;
+}
+
+#gse-example {
+  font-family: monospace;
+  margin-top: 5px;
+  padding: 50px;
+  width: 100%;
+  background-color: #222233;
+  border: 1px solid #444444;
+}
+
+#gse-example > h3 {
+  /*font-family: helvetica, arial, sans-serif;*/
 }

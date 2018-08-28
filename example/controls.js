@@ -19,3 +19,27 @@ function gseReplay() {
     item.animation.restart(true, false);
   });
 }
+
+var entityMap = {
+  '&': '&amp;',
+  '<': '&lt;',
+  '>': '&gt;',
+  '"': '&quot;',
+  "'": '&#39;',
+  '/': '&#x2F;',
+  '`': '&#x60;',
+  '=': '&#x3D;'
+};
+
+function escapeHtml (string) {
+  return String(string).replace(/[&<>"'`=\/]/g, function (s) {
+    return entityMap[s];
+  });
+}
+
+if ($('#gse-example').length !== 0) {
+  var elem = $('#gse-strip')[0].innerHTML;
+  console.log(elem);
+  //var str = escapeHtml(elem.innerHTML);
+  $('#gse-strip').html(escapeHtml(elem));
+}
