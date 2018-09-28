@@ -42,8 +42,5 @@ function escapeHtml (string) {
 if ($('#gse-example').length !== 0) {
   var elem = $('#gse-strip')[0].innerHTML;
   elem = elem.replace(/ style="[^"]*"/g, "");
-  //elem = elem.replace(/<br>/g, "&#10;");
-  //console.log(elem);
-  //var str = escapeHtml(elem.innerHTML);
   $('#gse-strip').html(escapeHtml(elem));
 }
