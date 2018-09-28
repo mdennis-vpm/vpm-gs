@@ -67,12 +67,12 @@ var flatFadeInOut = {
 };
 
 var slideInFromRight = {
-  left: $(window).width() * -1,
+  left: $(window).width(),
   ease: Power3.easeOut
 };
 
 var slideInFromLeft = {
-  right: $(window).width() * -1,
+  right: $(window).width(),
   ease: Power3.easeOut
 };
 
