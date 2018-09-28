@@ -3,6 +3,7 @@ body {
   color: #EEEEEE;
   font-family: helvetica, arial, sans-serif;
   margin: 0;
+  overflow-x: hidden;
 }
 
 h1 {

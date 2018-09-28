@@ -48,11 +48,6 @@ function getObj(item) {
 //  ]
 
 // Common/Reusable animation property sets
-var standardCardTween = {
-  top: "75px",
-  opacity: "0",
-  ease: Power3.easeOut
-};
 
 var standardUpTween = {
   top: "75px",
@@ -66,15 +61,19 @@ var standardDownTween = {
   ease: Power3.easeOut
 };
 
-var standardTextTween = {
-  transform: "translateY(50px)",
-  opacity: "0",
-  ease: Power1.easeOut
-};
-
 var flatFadeInOut = {
   opacity: "0",
   ease: Power2.easeOut
+};
+
+var slideInFromRight = {
+  left: $(window).width() * -1,
+  ease: Power3.easeOut
+};
+
+var slideInFromLeft = {
+  right: $(window).width() * -1,
+  ease: Power3.easeOut
 };
 
 var inputLabelSlide = {
@@ -112,6 +111,22 @@ var animationElements = [
     animDelay: 0.2
   },
   {
+    element: 'gs-slide-in-from-left',
+    animTarget: "class",
+    animOn: "scrollTo",
+    animProps: slideInFromLeft,
+    animTime: 0.5,
+    animDelay: 0.2
+  },
+  {
+    element: 'gs-slide-in-from-right',
+    animTarget: "class",
+    animOn: "scrollTo",
+    animProps: slideInFromRight,
+    animTime: 0.5,
+    animDelay: 0.2
+  },
+  {
     element: 'gs-fade-in',
     animTarget: "class",
     animOn: "scrollTo",
@@ -129,8 +144,11 @@ function createAnimations(animationSets) {
   var obj;
   renderedAnimationSets = [];
   animationSets.forEach(function(item, i) {
+    //console.log(item.animProps.ease);
+    //item.animProps.ease = Bounce.easeOut;
+    //console.log(item.animProps.ease);
+
     // contextual events to trigger animations
-    //console.log(i + " start");
     switch (item.animOn) {
       case "scrollTo":
         if (item.animTarget === "class") {
