@@ -9,11 +9,11 @@
 - Check element for enhancement classes?
 - Update object parameters for enhancements?
 
-
 */
 
 // Constants
-const WINDOW_WIDTH = $(window).width();
+const WINDOW_WIDTH = $(window).width(),
+      WINDOW_HEIGHT = $(window).height();
 
 function elementExists(element) {
   return ($('.' + element).length > 0);
@@ -86,9 +86,19 @@ _.throttle = function(func, wait, options) {
 //  ]
 
 // Default animation property values
-const ANIM_TRIGGER = "autoplay",
-      ANIM_TIME = 0.5,
-      ANIM_DELAY = 0.2;
+const DEFAULT_ANIM_TRIGGER = "autoplay",
+      DEFAULT_ANIM_PROPS = { opacity: "0", ease: Power2.easeOut },
+      DEFAULT_ANIM_TIME = 0.5,
+      DEFAULT_ANIM_DELAY = 0.2;
+
+// Default animation base object
+var baseAnim = {
+  animTarget: '',
+  animTrigger: DEFAULT_ANIM_TRIGGER,
+  animProps: DEFAULT_ANIM_PROPS,
+  animTime: DEFAULT_ANIM_TIME,
+  animDelay: DEFAULT_ANIM_DELAY
+}
 
 // Common/Reusable animation property sets
 var fadeInSlideUp = {
@@ -124,35 +134,35 @@ var animationElements = [
     animTarget: 'gs-fade-in-slide-up',
     animTrigger: "autoplay",
     animProps: fadeInSlideUp,
-    animTime: ANIM_TIME,
-    animDelay: ANIM_DELAY
+    animTime: DEFAULT_ANIM_TIME,
+    animDelay: DEFAULT_ANIM_DELAY
   },
   {
     animTarget: 'gs-fade-in-slide-down',
     animTrigger: "autoplay",
     animProps: fadeInSlideDown,
-    animTime: ANIM_TIME,
-    animDelay: ANIM_DELAY
+    animTime: DEFAULT_ANIM_TIME,
+    animDelay: DEFAULT_ANIM_DELAY
   },
   {
     animTarget: 'gs-slide-in-from-left',
     animTrigger: "autoplay",
     animProps: slideInFromLeft,
-    animTime: ANIM_TIME,
-    animDelay: ANIM_DELAY
+    animTime: DEFAULT_ANIM_TIME,
+    animDelay: DEFAULT_ANIM_DELAY
   },
   {
     animTarget: 'gs-slide-in-from-right',
     animTrigger: "autoplay",
     animProps: slideInFromRight,
-    animTime: ANIM_TIME,
-    animDelay: ANIM_DELAY
+    animTime: DEFAULT_ANIM_TIME,
+    animDelay: DEFAULT_ANIM_DELAY
   },
   {
     animTarget: 'gs-fade-in',
     animProps: fadeIn,
-    animTime: ANIM_TIME,
-    animDelay: ANIM_DELAY
+    animTime: DEFAULT_ANIM_TIME,
+    animDelay: DEFAULT_ANIM_DELAY
   }
 ];
 
