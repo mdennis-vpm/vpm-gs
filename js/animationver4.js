@@ -22,21 +22,22 @@ const WINDOW_WIDTH = $(window).width(),
       LIBRARY_BASE_CLASS = '[class*="' + LIBRARY_BASE_PREFIX + '"]';
 
 // Default animation property values.
-const DEFAULT_ANIM_TRIGGER = "autoplay",
+const DEFAULT_ANIM_TRIGGER = 'autoplay',
       DEFAULT_ANIM_PROPS = { opacity: "0", ease: Power2.easeOut },
       DEFAULT_ANIM_DURATION = 0.5,
       DEFAULT_ANIM_DELAY = 0.2,
+      DEFAULT_ANIM_PLAYBACK = 'forward',
 
 // Non-default animation values.
       ANIM_PROPS_FADE_IN = { opacity: "0", ease: Power2.easeOut },
       ANIM_PROPS_FADE_IN_SLIDE_UP = { top: "75px", opacity: "0", ease: Power3.easeOut },
       ANIM_PROPS_FADE_IN_SLIDE_DOWN = { top: "-75px", opacity: "0", ease: Power3.easeOut };
 
-      ANIM_TRIGGER_AUTOPLAY = "autoplay",
-      ANIM_TRIGGER_SCROLL_TO = "scroll-to",
-      ANIM_TRIGGER_FOCUS = "focus",
-      ANIM_TRIGGER_CLICK = "click",
-      ANIM_TRIGGER_HOVER = "hover";
+      ANIM_TRIGGER_AUTOPLAY = 'autoplay',
+      ANIM_TRIGGER_SCROLL_TO = 'scroll-to',
+      ANIM_TRIGGER_FOCUS = 'focus',
+      ANIM_TRIGGER_CLICK = 'click',
+      ANIM_TRIGGER_HOVER = 'hover';
 
       ANIM_DELAY_NONE = 0,
       ANIM_DELAY_SHORT = 0.1,
@@ -48,7 +49,10 @@ const DEFAULT_ANIM_TRIGGER = "autoplay",
       ANIM_DURATION_LONG = 1,
       ANIM_DURATION_XLONG = 2,
       ANIM_DURATION_XXLONG = 3,
-      ANIM_DURATION_XXXLONG = 5;
+      ANIM_DURATION_XXXLONG = 5,
+
+      ANIM_PLAY_FORWARD = 'forward',
+      ANIM_PLAY_REVERSE = 'reverse';
 
 // Variables
 var animTargetList = [];
@@ -86,7 +90,8 @@ function createAnimationObjects(sourceList) {
     rtn.push({
       animTarget: item,
       animDuration: DEFAULT_ANIM_DURATION,
-      animDelay: DEFAULT_ANIM_DELAY
+      animDelay: DEFAULT_ANIM_DELAY,
+      animHasRun: false
     });
   });
   console.log('%c Done!', 'color: green');
@@ -234,33 +239,88 @@ function runAnimation(anim, delay) {
 // animation objects' animTrigger properties.
 // Fire runAnimation function for animations
 // when their trigger requirements are met.
-function watchAnimationTriggers(objList) {
+/*function getAnimationTriggers(objList) {
+  var scrollToExists = false,
+      onFocusExists = false,
+      onHoverExists = false,
+      onClickExists = false;
+
   for (var obj of objList) {
     switch (obj.animTrigger) {
       case ANIM_TRIGGER_AUTOPLAY:
-        //console.log('TRIGGER = AUTOPLAY');
         runAnimation(obj.animation, obj.animDelay);
         break;
       case ANIM_TRIGGER_SCROLL_TO:
-        // TODO
-        //console.log('TRIGGER = SCROLLTO');
+        scrollToExists = true;
         break;
       case ANIM_TRIGGER_FOCUS:
-        // TODO
-        //console.log('TRIGGER = FOCUS');
+        onFocusExists = true;
         break;
       case ANIM_TRIGGER_HOVER:
-        // TODO
-        //console.log('TRIGGER = HOVER');
+        onHoverExists = true;
         break;
       case ANIM_TRIGGER_CLICK:
-        // TODO
-        //console.log('TRIGGER = CLICK');
+        onClickExists = true;
         break;
       default:
         break;
     }
+
+    //if (scrollToExists) watchTrigger(ANIM_TRIGGER_SCROLL_TO);
+    //if (onFocusExists) watchTrigger(ANIM_TRIGGER_FOCUS);
+    //if (onHoverExists) watchTrigger(ANIM_TRIGGER_HOVER);
+    //if (onClickExists) watchTrigger(ANIM_TRIGGER_CLICK);
   }
+}*/
+
+function watchAnimationTriggers(objList) {
+  objList.forEach(function(obj) {
+    console.log('%c Watching trigger: ' + obj.animTrigger + '...', 'color: cyan');
+    switch (obj.animTrigger) {
+      case ANIM_TRIGGER_AUTOPLAY:
+        if (!obj.hasRun) {
+          obj.hasRun = true;
+          runAnimation(obj.animation, obj.hasRun, obj.animDelay);
+        }
+        break;
+      case ANIM_TRIGGER_SCROLL_TO:
+        // TODO
+        break;
+      case ANIM_TRIGGER_FOCUS:
+        obj.animTarget.focus(function() {
+          if (!obj.hasRun) {
+            obj.hasRun = true;
+            runAnimation(obj.animation, obj.animDelay);
+          }
+        });
+        break;
+      case ANIM_TRIGGER_HOVER:
+        obj.animTarget.hover(function() {
+          if (!obj.hasRun) {
+            obj.hasRun = true;
+            runAnimation(obj.animation, obj.animDelay);
+          }
+        });
+        obj.animTarget.focus(function() {
+          if (!obj.hasRun) {
+            obj.hasRun = true;
+            runAnimation(obj.animation, obj.animDelay);
+          }
+        });
+        break;
+      case ANIM_TRIGGER_CLICK:
+        obj.animTarget.click(function() {
+          if (!obj.hasRun) {
+            obj.hasRun = true;
+            runAnimation(obj.animation, obj.animDelay);
+          }
+        });
+        break;
+      default:
+      console.log('%c GSAP ERROR: WATCHING UNKNOWN TRIGGER', 'color: red');
+        break;
+    }
+  });
 }
 
 // ========================================================================= //
