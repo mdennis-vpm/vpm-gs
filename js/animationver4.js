@@ -91,7 +91,8 @@ function createAnimationObjects(sourceList) {
       animTarget: item,
       animDuration: DEFAULT_ANIM_DURATION,
       animDelay: DEFAULT_ANIM_DELAY,
-      animHasRun: false
+      animHasRun: false,
+      animPlayback: DEFAULT_ANIM_PLAYBACK
     });
   });
   console.log('%c Done!', 'color: green');
@@ -211,6 +212,9 @@ function assignAnimEnhancements(objList) {
         case LIBRARY_BASE_PREFIX + 'xxxslow':
           obj.animDuration = ANIM_DURATION_XXXLONG;
           break;
+        case LIBRARY_BASE_PREFIX + 'reverse':
+          obj.animPlayback = ANIM_PLAY_REVERSE;
+          break;
         default:
           break;
       }
@@ -219,60 +223,34 @@ function assignAnimEnhancements(objList) {
   console.log('%c Done!', 'color: green');
 }
 
+function resetAnimation(animation, playback, duration) {
+  if (playback === ANIM_PLAY_FORWARD) {
+      animation.pause(0);
+  } else if (playback === ANIM_PLAY_REVERSE) {
+      animation.pause(duration);
+  }
+}
+
 // Look at each object's properties and assemble a new GSAP animation.
 function createAnimations(objList) {
   for (var obj of objList) {
     obj.animation = new TweenLite.from(obj.animTarget, obj.animDuration, obj.animProps);
-    obj.animation.pause(0);
-
-    //TEMP, REMOVE
-    //runAnimation(obj.animation, obj.animDelay);
+    resetAnimation(obj.animation, obj.animPlayback, obj.animDuration);
   }
 }
 
 // Run the requested animation after any additional delay.
-function runAnimation(anim, delay) {
-  TweenLite.delayedCall(delay, function(){anim.play(0)});
+function runAnimation(anim, delay, playback) {
+    if (playback === ANIM_PLAY_FORWARD) {
+      TweenLite.delayedCall(delay, function(){anim.play()});
+    } else if (playback === ANIM_PLAY_REVERSE) {
+      TweenLite.delayedCall(delay, function(){anim.reverse()});
+    }
 }
 
 // Set and watch all triggers being used by
 // animation objects' animTrigger properties.
-// Fire runAnimation function for animations
-// when their trigger requirements are met.
-/*function getAnimationTriggers(objList) {
-  var scrollToExists = false,
-      onFocusExists = false,
-      onHoverExists = false,
-      onClickExists = false;
-
-  for (var obj of objList) {
-    switch (obj.animTrigger) {
-      case ANIM_TRIGGER_AUTOPLAY:
-        runAnimation(obj.animation, obj.animDelay);
-        break;
-      case ANIM_TRIGGER_SCROLL_TO:
-        scrollToExists = true;
-        break;
-      case ANIM_TRIGGER_FOCUS:
-        onFocusExists = true;
-        break;
-      case ANIM_TRIGGER_HOVER:
-        onHoverExists = true;
-        break;
-      case ANIM_TRIGGER_CLICK:
-        onClickExists = true;
-        break;
-      default:
-        break;
-    }
-
-    //if (scrollToExists) watchTrigger(ANIM_TRIGGER_SCROLL_TO);
-    //if (onFocusExists) watchTrigger(ANIM_TRIGGER_FOCUS);
-    //if (onHoverExists) watchTrigger(ANIM_TRIGGER_HOVER);
-    //if (onClickExists) watchTrigger(ANIM_TRIGGER_CLICK);
-  }
-}*/
-
+// Fire animations when their trigger requirements are met.
 function watchAnimationTriggers(objList) {
   objList.forEach(function(obj) {
     console.log('%c Watching trigger: ' + obj.animTrigger + '...', 'color: cyan');
@@ -280,7 +258,7 @@ function watchAnimationTriggers(objList) {
       case ANIM_TRIGGER_AUTOPLAY:
         if (!obj.hasRun) {
           obj.hasRun = true;
-          runAnimation(obj.animation, obj.hasRun, obj.animDelay);
+          runAnimation(obj.animation, obj.animDelay, obj.animPlayback);
         }
         break;
       case ANIM_TRIGGER_SCROLL_TO:
@@ -290,7 +268,7 @@ function watchAnimationTriggers(objList) {
         obj.animTarget.focus(function() {
           if (!obj.hasRun) {
             obj.hasRun = true;
-            runAnimation(obj.animation, obj.animDelay);
+            runAnimation(obj.animation, obj.animDelay, obj.animPlayback);
           }
         });
         break;
@@ -298,13 +276,13 @@ function watchAnimationTriggers(objList) {
         obj.animTarget.hover(function() {
           if (!obj.hasRun) {
             obj.hasRun = true;
-            runAnimation(obj.animation, obj.animDelay);
+            runAnimation(obj.animation, obj.animDelay, obj.animPlayback);
           }
         });
         obj.animTarget.focus(function() {
           if (!obj.hasRun) {
             obj.hasRun = true;
-            runAnimation(obj.animation, obj.animDelay);
+            runAnimation(obj.animation, obj.animDelay, obj.animPlayback);
           }
         });
         break;
@@ -312,7 +290,7 @@ function watchAnimationTriggers(objList) {
         obj.animTarget.click(function() {
           if (!obj.hasRun) {
             obj.hasRun = true;
-            runAnimation(obj.animation, obj.animDelay);
+            runAnimation(obj.animation, obj.animDelay, obj.animPlayback);
           }
         });
         break;
