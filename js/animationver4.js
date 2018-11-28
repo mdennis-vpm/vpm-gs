@@ -6,27 +6,28 @@
 - [x] Update object's animProps
 - [x] Check element for animTrigger class
 - [x] Update object's animTrigger
-- [ ] Check element for enhancement classes?
-- [ ] Update object parameters for enhancements?
+- [x] Check element for enhancement classes
+- [x] Update object parameters for enhancements
+- [ ] Generate new GSAP animations using assembled animation objects
 
 */
 
 // ========================================================================= //
 // ===== Globals ===== //
 
-// Generic constants
+// Generic constants.
 const WINDOW_WIDTH = $(window).width(),
       WINDOW_HEIGHT = $(window).height(),
       LIBRARY_BASE_PREFIX = 'vpa-',
       LIBRARY_BASE_CLASS = '[class*="' + LIBRARY_BASE_PREFIX + '"]';
 
-// Default animation property values
+// Default animation property values.
 const DEFAULT_ANIM_TRIGGER = "autoplay",
       DEFAULT_ANIM_PROPS = { opacity: "0", ease: Power2.easeOut },
       DEFAULT_ANIM_DURATION = 0.5,
       DEFAULT_ANIM_DELAY = 0.2,
 
-// Non-default animation values
+// Non-default animation values.
       ANIM_PROPS_FADE_IN = { opacity: "0", ease: Power2.easeOut },
       ANIM_PROPS_FADE_IN_SLIDE_UP = { top: "75px", opacity: "0", ease: Power3.easeOut },
       ANIM_PROPS_FADE_IN_SLIDE_DOWN = { top: "-75px", opacity: "0", ease: Power3.easeOut };
@@ -56,7 +57,7 @@ var animObjectList = [];
 // ========================================================================= //
 // ===== Support Functions ===== //
 
-// Check if an element with the specified class name exists
+// Check if an element with the specified class name exists.
 function elementExists(element) {
   return ($('.' + element).length > 0);
 }
@@ -65,7 +66,7 @@ function elementExists(element) {
 // =====  ===== //
 
 // Populate vpaList with every element that has
-// at least one class containing the string "vpa-"
+// at least one class containing the string "vpa-".
 function getElementList(searchClass) {
   console.log('%c getElementsList...', 'color: teal');
   var rtn = [];
@@ -102,7 +103,7 @@ function assignAnimTypes(objList) {
     var animTypeFound = false;
 
     for (var itemClass of obj.animTarget[0].classList) {
-      switch(itemClass) {
+      switch (itemClass) {
         case LIBRARY_BASE_PREFIX + 'fade-in':
           obj.animProps = ANIM_PROPS_FADE_IN;
           animTypeFound = !animTypeFound;
@@ -118,7 +119,6 @@ function assignAnimTypes(objList) {
         default:
           break;
       }
-
       if (animTypeFound) return;
     }
     if (!animTypeFound) obj.animProps = DEFAULT_ANIM_PROPS;
@@ -136,7 +136,7 @@ function assignAnimTriggers(objList) {
     var animTriggerFound = false;
 
     for (var itemClass of obj.animTarget[0].classList) {
-      switch(itemClass) {
+      switch (itemClass) {
         case LIBRARY_BASE_PREFIX + 'autoplay':
           obj.animTrigger = ANIM_TRIGGER_AUTOPLAY;
           animTriggerFound = !animTriggerFound;
@@ -160,8 +160,7 @@ function assignAnimTriggers(objList) {
         default:
           break;
       }
-
-      //if (animTriggerFound) return;
+      if (animTriggerFound) return;
     }
     if (!animTriggerFound) obj.animTrigger = DEFAULT_ANIM_TRIGGER;
   });
@@ -176,7 +175,7 @@ function assignAnimEnhancements(objList) {
 
   objList.forEach(function(obj) {
     for (var itemClass of obj.animTarget[0].classList) {
-      switch(itemClass) {
+      switch (itemClass) {
         case LIBRARY_BASE_PREFIX + 'delay-none':
           obj.animDelay = ANIM_DELAY_NONE;
           break;
@@ -215,6 +214,55 @@ function assignAnimEnhancements(objList) {
   console.log('%c Done!', 'color: green');
 }
 
+// Look at each object's properties and assemble a new GSAP animation.
+function createAnimations(objList) {
+  for (var obj of objList) {
+    obj.animation = new TweenLite.from(obj.animTarget, obj.animDuration, obj.animProps);
+    obj.animation.pause(0);
+
+    //TEMP, REMOVE
+    //runAnimation(obj.animation, obj.animDelay);
+  }
+}
+
+// Run the requested animation after any additional delay.
+function runAnimation(anim, delay) {
+  TweenLite.delayedCall(delay, function(){anim.play(0)});
+}
+
+// Set and watch all triggers being used by
+// animation objects' animTrigger properties.
+// Fire runAnimation function for animations
+// when their trigger requirements are met.
+function watchAnimationTriggers(objList) {
+  for (var obj of objList) {
+    switch (obj.animTrigger) {
+      case ANIM_TRIGGER_AUTOPLAY:
+        //console.log('TRIGGER = AUTOPLAY');
+        runAnimation(obj.animation, obj.animDelay);
+        break;
+      case ANIM_TRIGGER_SCROLL_TO:
+        // TODO
+        //console.log('TRIGGER = SCROLLTO');
+        break;
+      case ANIM_TRIGGER_FOCUS:
+        // TODO
+        //console.log('TRIGGER = FOCUS');
+        break;
+      case ANIM_TRIGGER_HOVER:
+        // TODO
+        //console.log('TRIGGER = HOVER');
+        break;
+      case ANIM_TRIGGER_CLICK:
+        // TODO
+        //console.log('TRIGGER = CLICK');
+        break;
+      default:
+        break;
+    }
+  }
+}
+
 // ========================================================================= //
 // ===== On Load ===== //
 
@@ -224,6 +272,8 @@ $(window).on('load', function(){
   assignAnimTypes(animObjectList);
   assignAnimTriggers(animObjectList);
   assignAnimEnhancements(animObjectList);
+  createAnimations(animObjectList);
+  watchAnimationTriggers(animObjectList);
 
   console.log('%c Animation Objects Below:', 'color: orange');
   console.log(animObjectList);
