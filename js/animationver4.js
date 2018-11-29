@@ -8,7 +8,9 @@
 - [x] Update object's animTrigger
 - [x] Check element for enhancement classes
 - [x] Update object parameters for enhancements
-- [ ] Generate new GSAP animations using assembled animation objects
+- [x] Generate new GSAP animations using assembled animation objects
+- [x] Set and watch each animation's triggers
+- [ ] Technically, it's done! Expand with additional functional features
 
 */
 
@@ -223,6 +225,7 @@ function assignAnimEnhancements(objList) {
   console.log('%c Done!', 'color: green');
 }
 
+// Reset given animation to its appropriate starting point and pause it.
 function resetAnimation(animation, playback, duration) {
   if (playback === ANIM_PLAY_FORWARD) {
       animation.pause(0);
