@@ -25,7 +25,7 @@ const WINDOW_WIDTH = $(window).width(),
 
 // Default animation property values.
 const DEFAULT_ANIM_TRIGGER = 'autoplay',
-      DEFAULT_ANIM_PROPS = { opacity: "0", ease: Power2.easeOut },
+      DEFAULT_ANIM_PROPS = { opacity: "1", ease: Power2.easeOut },
       DEFAULT_ANIM_EASING = { ease: Power2.easeOut },
       DEFAULT_ANIM_DURATION = 0.5,
       DEFAULT_ANIM_DELAY = 0.2,
@@ -33,7 +33,7 @@ const DEFAULT_ANIM_TRIGGER = 'autoplay',
 
 // Non-default animation values.
       ANIM_PROPS_FADE_IN = { opacity: '1', ease: Power2.easeOut },
-      ANIM_PROPS_FADE_OUT = { opacity: '0', ease: Power2.easeOut},
+      ANIM_PROPS_FADE_OUT = { opacity: '0', ease: Power2.easeOut },
 
       ANIM_PROPS_SLIDE_UP = { top: "-75px", ease: Power3.easeOut },
       ANIM_PROPS_SLIDE_DOWN = { top: "75px", ease: Power3.easeOut };
@@ -80,7 +80,7 @@ function getElementList(searchClass) {
   console.log('%c getElementsList...', 'color: teal');
   var rtn = [];
   $(searchClass).each(function() {
-    rtn.push($(this));
+    rtn.push(this);
   });
   console.log('%c Done!', 'color: green');
   return rtn;
@@ -88,7 +88,7 @@ function getElementList(searchClass) {
 
 // Create an object for each item in the given array,
 // push each new object into return array.
-function createAnimationObjects(sourceList) {
+/*function createAnimationObjectsOLD(sourceList) {
   console.log('%c createAnimationObjects...', 'color: teal');
   var rtn = [];
   sourceList.forEach(function(item) {
@@ -98,87 +98,109 @@ function createAnimationObjects(sourceList) {
       animTrigger: DEFAULT_ANIM_TRIGGER,
       animDuration: DEFAULT_ANIM_DURATION,
       animDelay: DEFAULT_ANIM_DELAY,
-      animHasRun: false,
+      animHasRun: false
       //animPlayback: DEFAULT_ANIM_PLAYBACK
     });
   });
   console.log('%c Done!', 'color: green');
   return rtn;
+}*/
+
+function createAnimationObjects(sourceList) {
+  rtn = [];
+  sourceList.forEach(function(item) {
+    rtn.push(new AnimObj(
+      item,
+      DEFAULT_ANIM_PROPS,
+      DEFAULT_ANIM_TRIGGER,
+      DEFAULT_ANIM_DURATION,
+      DEFAULT_ANIM_DELAY,
+      false,
+      false
+    ));
+  });
+  console.log(rtn);
+  return rtn;
 }
 
-function AnimObj(animTarget, animProps, animTrigger, animDuration, animDelay, animHasRun) {
-  return;
+function AnimObj(animTarget, animProps, animTrigger, animDuration, animDelay, animHasRun, animRunFlag) {
+  this.animTarget = animTarget;
+  this.animProps = animProps;
+  this.animTrigger = animTrigger;
+  this.animDuration = animDuration;
+  this.animDelay = animDelay;
+  this.animHasRun = animHasRun;
+  this.animRunFlag = animRunFlag;
+}
+
+// Gives element relative positioning if not relative or absolute.
+// Without either, element may not animate properly.
+AnimObj.prototype.setElementPosition = function() {
+  //console.log(this);
+  if (this.animTarget.style.position !== 'relative' || 'absolute') this.animTarget.style.position = 'relative';
 }
 
 // Look through the classes in each object in the list,
 // if any classes match a library preset, apply those animation properties,
 // if no match is found, give it the default.
-function assignAnimTypes(obj) {
+AnimObj.prototype.assignAnimTypes = function() {
   console.log('%c assignAnimTypes...', 'color: teal');
 
-  for (var itemClass of obj.animTarget[0].classList) {
+  for (var itemClass of this.animTarget.classList) {
     switch (itemClass) {
       case LIBRARY_BASE_PREFIX + 'fade-in':
-        //obj.animTarget[0].style.opacity = '0';
-        //obj.animProps = Object.assign({}, ANIM_PROPS_FADE_IN);
-        $.extend(true, obj.animProps, ANIM_PROPS_FADE_IN);
-        //animTypeFound = true;
-        console.log(obj.animProps);
+        //this.animTarget[0].style.opacity = '0';
+        //this.animProps = ANIM_PROPS_FADE_IN;
+        $.extend(this.animProps, ANIM_PROPS_FADE_IN);
         break;
       case LIBRARY_BASE_PREFIX + 'fade-out':
-        //obj.animTarget[0].style.opacity = '1';
-        //obj.animProps = Object.assign({}, ANIM_PROPS_FADE_OUT);
-        $.extend(true, obj.animProps, ANIM_PROPS_FADE_OUT);
-        //animTypeFound = true;
-        console.log(obj.animProps);
+        //this.animTarget[0].style.opacity = '1';
+        //this.animProps = ANIM_PROPS_FADE_OUT;
+        $.extend(this.animProps, ANIM_PROPS_FADE_OUT);
         break;
       case LIBRARY_BASE_PREFIX + 'slide-up':
-        //obj.animProps = Object.assign({}, ANIM_PROPS_SLIDE_UP);
-        $.extend(true, obj.animProps, ANIM_PROPS_SLIDE_UP);
-        //animTypeFound = true;
-        console.log(obj.animProps);
+        //this.animProps = ANIM_PROPS_SLIDE_UP;
+        $.extend(this.animProps, ANIM_PROPS_SLIDE_UP);
         break;
       case LIBRARY_BASE_PREFIX + 'slide-down':
-        ///obj.animProps = Object.assign({}, ANIM_PROPS_SLIDE_DOWN);
-        $.extend(true, obj.animProps, ANIM_PROPS_SLIDE_DOWN);
-        //animTypeFound = true;
-        console.log(obj.animProps);
+        //this.animProps = ANIM_PROPS_SLIDE_DOWN;
+        $.extend(this.animProps, ANIM_PROPS_SLIDE_DOWN);
         break;
       default:
         break;
     }
-    //if (animTypeFound) return;
   }
+  console.log(this.animProps);
   console.log('%c Done!', 'color: green');
 }
 
 // Look through the classes in each object in the list,
 // if any classes match a library preset, apply that animation trigger,
 // if no match is found, give it the default.
-function assignAnimTrigger(obj) {
+AnimObj.prototype.assignAnimTrigger = function() {
   console.log('%c assignAnimTriggers...', 'color: teal');
   var animTriggerFound = false;
 
-  for (var itemClass of obj.animTarget[0].classList) {
+  for (var itemClass of this.animTarget.classList) {
     switch (itemClass) {
       case LIBRARY_BASE_PREFIX + 'autoplay':
-        obj.animTrigger = ANIM_TRIGGER_AUTOPLAY;
+        this.animTrigger = ANIM_TRIGGER_AUTOPLAY;
         animTriggerFound = !animTriggerFound;
         break;
       case LIBRARY_BASE_PREFIX + 'on-scroll-to':
-        obj.animTrigger = ANIM_TRIGGER_SCROLL_TO;
+        this.animTrigger = ANIM_TRIGGER_SCROLL_TO;
         animTriggerFound = !animTriggerFound;
         break;
       case LIBRARY_BASE_PREFIX + 'on-focus':
-        obj.animTrigger = ANIM_TRIGGER_FOCUS;
+        this.animTrigger = ANIM_TRIGGER_FOCUS;
         animTriggerFound = !animTriggerFound;
         break;
       case LIBRARY_BASE_PREFIX + 'on-hover':
-        obj.animTrigger = ANIM_TRIGGER_HOVER;
+        this.animTrigger = ANIM_TRIGGER_HOVER;
         animTriggerFound = !animTriggerFound;
         break;
       case LIBRARY_BASE_PREFIX + 'on-click':
-        obj.animTrigger = ANIM_TRIGGER_CLICK;
+        this.animTrigger = ANIM_TRIGGER_CLICK;
         animTriggerFound = !animTriggerFound;
         break;
       default:
@@ -192,43 +214,43 @@ function assignAnimTrigger(obj) {
 // Look through the classes in each object in the list,
 // if any classes match a library preset, apply that animation enhancement.
 // Function only stops after all classes are checked.
-function assignAnimEnhancements(obj) {
+AnimObj.prototype.assignAnimEnhancements = function() {
   console.log('%c assignAnimEnhancements...', 'color: teal');
 
-  for (var itemClass of obj.animTarget[0].classList) {
+  for (var itemClass of this.animTarget.classList) {
     switch (itemClass) {
       case LIBRARY_BASE_PREFIX + 'delay-none':
-        obj.animDelay = ANIM_DELAY_NONE;
+        this.animDelay = ANIM_DELAY_NONE;
         break;
       case LIBRARY_BASE_PREFIX + 'delay-short':
-        obj.animDelay = ANIM_DELAY_SHORT;
+        this.animDelay = ANIM_DELAY_SHORT;
         break;
       case LIBRARY_BASE_PREFIX + 'delay-long':
-        obj.animDelay = ANIM_DELAY_LONG;
+        this.animDelay = ANIM_DELAY_LONG;
         break;
       case LIBRARY_BASE_PREFIX + 'delay-xlong':
-        obj.animDelay = ANIM_DELAY_XLONG;
+        this.animDelay = ANIM_DELAY_XLONG;
         break;
       case LIBRARY_BASE_PREFIX + 'xfast':
-        obj.animDuration = ANIM_DURATION_XSHORT;
+        this.animDuration = ANIM_DURATION_XSHORT;
         break;
       case LIBRARY_BASE_PREFIX + 'fast':
-        obj.animDuration = ANIM_DURATION_SHORT;
+        this.animDuration = ANIM_DURATION_SHORT;
         break;
       case LIBRARY_BASE_PREFIX + 'slow':
-        obj.animDuration = ANIM_DURATION_LONG;
+        this.animDuration = ANIM_DURATION_LONG;
         break;
       case LIBRARY_BASE_PREFIX + 'xslow':
-        obj.animDuration = ANIM_DURATION_XLONG;
+        this.animDuration = ANIM_DURATION_XLONG;
         break;
       case LIBRARY_BASE_PREFIX + 'xxslow':
-        obj.animDuration = ANIM_DURATION_XXLONG;
+        this.animDuration = ANIM_DURATION_XXLONG;
         break;
       case LIBRARY_BASE_PREFIX + 'xxxslow':
-        obj.animDuration = ANIM_DURATION_XXXLONG;
+        this.animDuration = ANIM_DURATION_XXXLONG;
         break;
       case LIBRARY_BASE_PREFIX + 'reverse':
-        obj.animPlayback = ANIM_PLAY_REVERSE;
+        this.animPlayback = ANIM_PLAY_REVERSE;
         break;
       default:
         break;
@@ -238,61 +260,73 @@ function assignAnimEnhancements(obj) {
 }
 
 // Look at each object's properties and assemble a new GSAP animation.
-/*function createAnimations(objList) {
-  for (var obj of objList) {
-    obj.animation = new TweenLite.from(obj.animTarget, obj.animDuration, obj.animProps);
-    resetAnimation(obj.animation, obj.animPlayback, obj.animDuration);
-  }
-}*/
-function createAnimation(obj) {
-  //obj.animation = new TweenLite.to(obj.animTarget, obj.animDuration, obj.animProps);
-  return new TweenLite.to(obj.animTarget, obj.animDuration, obj.animProps);
-  //;resetAnimation(obj.animation);
+AnimObj.prototype.createAnimation = function() {
+  this.animation = new TweenLite.to(this.animTarget, this.animDuration, this.animProps);
+}
+
+AnimObj.prototype.animation = function() {
+  //return new TweenLite.to(this.animTarget, this.animDuration, this.animProps);
+}
+
+AnimObj.prototype.resetAnimation = function() {
+  this.animation.restart();
+  this.animation.pause();
 }
 
 // Set and watch all triggers being used by
 // animation objects' animTrigger properties.
 // Fire animations when their trigger requirements are met.
-function watchAnimationTrigger(obj) {
-  console.log('%c Watching trigger: ' + obj.animTrigger + '...', 'color: cyan');
+AnimObj.prototype.watchAnimationTrigger = function() {
+  console.log('%c Watching trigger: ' + this.animTrigger + '...', 'color: cyan');
+  var obj = this;
 
-  switch (obj.animTrigger) {
+  switch (this.animTrigger) {
     case ANIM_TRIGGER_AUTOPLAY:
-      if (!obj.hasRun) {
-        obj.hasRun = true;
-        runAnimation(obj.animation, obj.animDelay);
+      if (!this.animHasRun) {
+        //this.hasRun = true;
+        this.animRunFlag = true;
+        //runAnimation(this);
+        TweenLite.delayedCall(this.animDelay, function(){ this.animation.play() });
       }
       break;
     case ANIM_TRIGGER_SCROLL_TO:
       // TODO
       break;
     case ANIM_TRIGGER_FOCUS:
-      obj.animTarget.focus(function() {
-        if (!obj.hasRun) {
-          obj.hasRun = true;
-          runAnimation(obj.animation, obj.animDelay);
+      $(this.animTarget).focus(function() {
+        if (!this.animHasRun) {
+          //this.hasRun = true;
+          this.animRunFlag = true;
+          //runAnimation(this);
+          TweenLite.delayedCall(this.animDelay, function(){ this.animation.play() });
         }
       });
       break;
     case ANIM_TRIGGER_HOVER:
-      obj.animTarget.hover(function() {
-        if (!obj.hasRun) {
-          obj.hasRun = true;
-          runAnimation(obj.animation, obj.animDelay);
+      $(this.animTarget).hover(function() {
+        if (!this.animHasRun) {
+          //this.hasRun = true;
+          this.animRunFlag = true;
+          //runAnimation(this);
+          TweenLite.delayedCall(this.animDelay, function(){ this.animation.play() });
         }
       });
-      obj.animTarget.focus(function() {
-        if (!obj.hasRun) {
-          obj.hasRun = true;
-          runAnimation(obj.animation, obj.animDelay);
+      $(this.animTarget).focus(function() {
+        if (!this.animHasRun) {
+          //this.hasRun = true;
+          this.animRunFlag = true;
+          //runAnimation(this);
+          TweenLite.delayedCall(this.animDelay, function(){ this.animation.play() });
         }
       });
       break;
     case ANIM_TRIGGER_CLICK:
-      obj.animTarget.click(function() {
-        if (!obj.hasRun) {
-          obj.hasRun = true;
-          runAnimation(obj.animation, obj.animDelay);
+      $(this.animTarget).click(function() {
+        if (!this.animHasRun) {
+          //this.hasRun = true;
+          this.animRunFlag = true;
+          //runAnimation(this);
+          TweenLite.delayedCall(this.animDelay, function(){ this.animation.play() });
         }
       });
       break;
@@ -302,47 +336,41 @@ function watchAnimationTrigger(obj) {
   }
 }
 
-// Gives element relative positioning if not relative or absolute.
-// Without either, element may not animate properly.
-function setElementPosition(obj) {
+function runAnimation(obj) {
+  console.log("animating...");
   console.log(obj);
-  if (obj.animTarget[0].style.position !== 'relative' || 'absolute') obj.animTarget[0].style.position = 'relative';
+  TweenLite.delayedCall(obj.animDelay, function(){ obj.animation.play() });
+  obj.animHasRun = true;
+  obj.animRunFlag = false;
 }
 
-function runAnimation(anim, delay) {
-    TweenLite.delayedCall(delay, function(){anim.play()});
-}
-
-function resetAnimation(animation) {
-  animation.restart();
-  animation.pause();
+AnimObj.prototype.setStartupClassStyles = function() {
+  //TweenLite.set(this.animTarget, {opacity: 0});
+  //$('.' + LIBRARY_BASE_PREFIX + 'fade-in').css('opacity', '0');
 }
 
 // ========================================================================= //
 // ===== On Load ===== //
 
+//setStartupClassStyles();
+
 $(window).on('load', function(){
   var animTargetList = getElementList(LIBRARY_BASE_CLASS);
   var animObjectList = createAnimationObjects(animTargetList);
-  var anim;
 
   for (var obj of animObjectList) {
-    setElementPosition(obj);
-    assignAnimTypes(obj);
-    assignAnimTrigger(obj);
-    assignAnimEnhancements(obj);
-    obj.animation = createAnimation(obj);
-    resetAnimation(obj.animation);
-    watchAnimationTrigger(obj);
-    //delete obj;
+    console.log("asdf...");
+    console.log(obj);
+    //obj.setElementPosition();
+    obj.assignAnimTypes();
+    obj.assignAnimTrigger();
+    obj.assignAnimEnhancements();
+    obj.createAnimation();
+    obj.resetAnimation();
+    obj.setStartupClassStyles();
+    obj.watchAnimationTrigger();
+    //obj.runAnimation();
   }
-
-  /*setElementPositions(animObjectList);
-  assignAnimTypes(animObjectList);
-  assignAnimTriggers(animObjectList);
-  assignAnimEnhancements(animObjectList);
-  createAnimations(animObjectList);
-  watchAnimationTriggers(animObjectList);*/
 
   console.log('%c Animation Objects Below:', 'color: orange');
   console.log(animObjectList);

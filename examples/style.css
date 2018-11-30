@@ -119,6 +119,10 @@ ul > li > a[href=""] {
   width: 100%;
 }
 
+#gse-container--showcase > div {
+  position: relative;
+}
+
 .gse-description {
   margin-top: 5px;
   padding: 50px;
@@ -149,4 +153,12 @@ ul > li > a[href=""] {
 
 #gse-example > h3 {
   /*font-family: helvetica, arial, sans-serif;*/
+}
+
+.vpa-fade-in {
+
+}
+
+.vpa-fade-out {
+
 }
