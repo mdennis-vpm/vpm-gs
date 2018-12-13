@@ -1,25 +1,29 @@
 function gseReset() {
-  renderedAnimationSets.forEach(function(item) {
-    item.gs.kill();
-    item.gs.pause(0);
-    item.gs.delay(item.animDelay);
-  });
+  for (var obj of animObjectList) {
+    //obj.animation.kill();
+    //obj.animation.pause(0);
+    //obj.animation.delay(obj.animDelay);
+    //obj.hasRun = false;
+    //obj.animRunFlag = false;
+    obj.resetAnimation();
+    obj.watchAnimationTrigger();
+  }
 }
 
 function gsePlay() {
-  renderedAnimationSets.forEach(function(item) {
-    TweenLite.delayedCall(item.animDelay, function(){item.gs.play()});
-  });
+  for (var obj of animObjectList) {
+    runAnimation(obj);
+  }
 }
 
 function gseReplay() {
-  renderedAnimationSets.forEach(function(item) {
-    console.log("replaying " + item.element);
-    item.gs.kill();
-    item.gs.delay(item.animDelay);
-    item.gs.restart(true, false);
-    console.log("done " + item.element);
-  });
+  for (var obj of animObjectList) {
+    console.log("replaying " + obj.element);
+    obj.animation.kill();
+    obj.animation.delay(obj.animDelay);
+    obj.animation.restart(true, false);
+    console.log("done " + obj.animTarget);
+  }
 }
 
 var entityMap = {

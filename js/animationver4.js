@@ -32,8 +32,9 @@ const DEFAULT_ANIM_TRIGGER = 'autoplay',
       //DEFAULT_ANIM_PLAYBACK = 'forward',
 
 // Non-default animation values.
-      ANIM_PROPS_FADE_IN = { opacity: '1', ease: Power2.easeOut },
+      ANIM_PROPS_FADE_IN = { opacity: '0', ease: Power2.easeOut },
       ANIM_PROPS_FADE_OUT = { opacity: '0', ease: Power2.easeOut },
+      ANIM_PROPS_FADE = { opacity: '0', ease: Power2.easeOut },
 
       ANIM_PROPS_SLIDE_UP = { top: "-75px", ease: Power3.easeOut },
       ANIM_PROPS_SLIDE_DOWN = { top: "75px", ease: Power3.easeOut };
@@ -60,8 +61,8 @@ const DEFAULT_ANIM_TRIGGER = 'autoplay',
       //ANIM_PLAY_REVERSE = 'reverse';
 
 // Variables
-//var animTargetList = [];
-//var animObjectList = [];
+var animTargetList;
+var animObjectList;
 
 // ========================================================================= //
 // ===== Support Functions ===== //
@@ -100,13 +101,17 @@ function createAnimationObjects(sourceList) {
 // Initialize constructor function for a new Animation Object.
 function AnimObj(animTarget) {
   this.animTarget = animTarget;
+  this.animTo = assignAnimIn(this.animTarget);
   this.animProps = assignAnimProps(this.animTarget);
   this.animTrigger = assignAnimTrigger(this.animTarget);
   this.animDuration = assignAnimDuration(this.animTarget);
   this.animDelay = assignAnimDelay(this.animTarget);
   this.animHasRun = false;
   this.animRunFlag = false;
-  this.animation = new TweenLite.to(this.animTarget, this.animDuration, this.animProps);
+  this.animation =
+    this.animTo ?
+    new TweenLite.from(this.animTarget, this.animDuration, this.animProps) :
+    new TweenLite.to(this.animTarget, this.animDuration, this.animProps);
 }
 
 // Set and watch trigger being used by
@@ -119,7 +124,7 @@ AnimObj.prototype.watchAnimationTrigger = function() {
   switch (this.animTrigger) {
     case ANIM_TRIGGER_AUTOPLAY:
       if (!this.animHasRun) {
-        this.animRunFlag = true;
+        //this.animRunFlag = true;
         runAnimation(obj);
       }
       break;
@@ -129,7 +134,7 @@ AnimObj.prototype.watchAnimationTrigger = function() {
     case ANIM_TRIGGER_FOCUS:
       $(this.animTarget).on('focus', function() {
         if (!obj.animHasRun) {
-          obj.animRunFlag = true;
+          //obj.animRunFlag = true;
           runAnimation(obj);
         }
       });
@@ -137,7 +142,7 @@ AnimObj.prototype.watchAnimationTrigger = function() {
     case ANIM_TRIGGER_HOVER:
       $(this.animTarget).on('mouseenter focusin', function() {
         if (!obj.animHasRun) {
-          obj.animRunFlag = true;
+          //obj.animRunFlag = true;
           runAnimation(obj);
         }
       });
@@ -145,7 +150,7 @@ AnimObj.prototype.watchAnimationTrigger = function() {
     case ANIM_TRIGGER_CLICK:
       $(this.animTarget).on('click', function() {
         if (!obj.animHasRun) {
-          obj.animRunFlag = true;
+          //obj.animRunFlag = true;
           runAnimation(obj);
         }
       });
@@ -160,6 +165,8 @@ AnimObj.prototype.watchAnimationTrigger = function() {
 AnimObj.prototype.resetAnimation = function() {
   this.animation.restart();
   this.animation.pause();
+  this.animHasRun = false;
+  //this.animRunFlag = false;
 }
 
 // Gives element relative positioning if not relative or absolute.
@@ -179,11 +186,8 @@ function assignAnimProps(target) {
 
   for (var itemClass of target.classList) {
     switch (itemClass) {
-      case LIBRARY_BASE_PREFIX + 'fade-in':
-        $.extend(rtn, ANIM_PROPS_FADE_IN);
-        break;
-      case LIBRARY_BASE_PREFIX + 'fade-out':
-        $.extend(rtn, ANIM_PROPS_FADE_OUT);
+      case LIBRARY_BASE_PREFIX + 'fade':
+        $.extend(rtn, ANIM_PROPS_FADE);
         break;
       case LIBRARY_BASE_PREFIX + 'slide-up':
         $.extend(rtn, ANIM_PROPS_SLIDE_UP);
@@ -198,6 +202,13 @@ function assignAnimProps(target) {
   if ($.isEmptyObject(rtn)) $.extend(rtn, DEFAULT_ANIM_PROPS);
   console.log('%c Done! Using default.', 'color: green');
   return rtn;
+}
+
+function assignAnimIn(target) {
+  for (var itemClass of target.classList) {
+    if (itemClass === LIBRARY_BASE_PREFIX + 'out') return false;
+  }
+  return true;
 }
 
 // Look through the classes in target object.
@@ -279,11 +290,13 @@ function runAnimation(obj) {
   //console.log(obj);
   TweenLite.delayedCall(obj.animDelay, function(){ obj.animation.play() });
   obj.animHasRun = true;
-  obj.animRunFlag = false;
+  //obj.animRunFlag = false;
 }
 
 function setStartupClassStyles() {
-  $('.' + LIBRARY_BASE_PREFIX + 'fade-in').css('opacity', '0');
+  //$('.' + LIBRARY_BASE_PREFIX + 'fade-out').css('opacity', '1');
+  //$('.' + LIBRARY_BASE_PREFIX + 'fade-in.'
+  //      + LIBRARY_BASE_PREFIX + 'slide-up').css('top', '75px');
 }
 
 // ========================================================================= //
@@ -292,8 +305,8 @@ function setStartupClassStyles() {
 //setStartupClassStyles();
 
 $(window).on('load', function(){
-  var animTargetList = getElementList(LIBRARY_BASE_CLASS);
-  var animObjectList = createAnimationObjects(animTargetList);
+  animTargetList = getElementList(LIBRARY_BASE_CLASS);
+  animObjectList = createAnimationObjects(animTargetList);
 
   for (var obj of animObjectList) {
     console.log(obj.animation);
