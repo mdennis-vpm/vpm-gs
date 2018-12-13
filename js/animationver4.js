@@ -32,18 +32,16 @@ const DEFAULT_ANIM_TRIGGER = 'autoplay',
       //DEFAULT_ANIM_PLAYBACK = 'forward',
 
 // Non-default animation values.
-      ANIM_PROPS_FADE_IN = { opacity: '0', ease: Power2.easeOut },
-      ANIM_PROPS_FADE_OUT = { opacity: '0', ease: Power2.easeOut },
       ANIM_PROPS_FADE = { opacity: '0', ease: Power2.easeOut },
 
       ANIM_PROPS_SLIDE_UP = { top: "-75px", ease: Power3.easeOut },
-      ANIM_PROPS_SLIDE_DOWN = { top: "75px", ease: Power3.easeOut };
+      ANIM_PROPS_SLIDE_DOWN = { top: "75px", ease: Power3.easeOut },
 
       ANIM_TRIGGER_AUTOPLAY = 'autoplay',
       ANIM_TRIGGER_SCROLL_TO = 'scroll-to',
       ANIM_TRIGGER_FOCUS = 'focus',
       ANIM_TRIGGER_CLICK = 'click',
-      ANIM_TRIGGER_HOVER = 'hover';
+      ANIM_TRIGGER_HOVER = 'hover',
 
       ANIM_DELAY_NONE = 0,
       ANIM_DELAY_SHORT = 0.1,
@@ -56,9 +54,6 @@ const DEFAULT_ANIM_TRIGGER = 'autoplay',
       ANIM_DURATION_XLONG = 2,
       ANIM_DURATION_XXLONG = 3,
       ANIM_DURATION_XXXLONG = 5;
-
-      //ANIM_PLAY_FORWARD = 'forward',
-      //ANIM_PLAY_REVERSE = 'reverse';
 
 // Variables
 var animTargetList;
@@ -107,7 +102,6 @@ function AnimObj(animTarget) {
   this.animDuration = assignAnimDuration(this.animTarget);
   this.animDelay = assignAnimDelay(this.animTarget);
   this.animHasRun = false;
-  this.animRunFlag = false;
   this.animation =
     this.animTo ?
     new TweenLite.from(this.animTarget, this.animDuration, this.animProps) :
@@ -123,36 +117,24 @@ AnimObj.prototype.watchAnimationTrigger = function() {
 
   switch (this.animTrigger) {
     case ANIM_TRIGGER_AUTOPLAY:
-      if (!this.animHasRun) {
-        //this.animRunFlag = true;
-        runAnimation(obj);
-      }
+      if (!this.animHasRun) runAnimation(obj);
       break;
     case ANIM_TRIGGER_SCROLL_TO:
       // TODO
       break;
     case ANIM_TRIGGER_FOCUS:
       $(this.animTarget).on('focus', function() {
-        if (!obj.animHasRun) {
-          //obj.animRunFlag = true;
-          runAnimation(obj);
-        }
+        if (!obj.animHasRun) runAnimation(obj);
       });
       break;
     case ANIM_TRIGGER_HOVER:
       $(this.animTarget).on('mouseenter focusin', function() {
-        if (!obj.animHasRun) {
-          //obj.animRunFlag = true;
-          runAnimation(obj);
-        }
+        if (!obj.animHasRun) runAnimation(obj);
       });
       break;
     case ANIM_TRIGGER_CLICK:
       $(this.animTarget).on('click', function() {
-        if (!obj.animHasRun) {
-          //obj.animRunFlag = true;
-          runAnimation(obj);
-        }
+        if (!obj.animHasRun) runAnimation(obj);
       });
       break;
     default:
@@ -166,7 +148,6 @@ AnimObj.prototype.resetAnimation = function() {
   this.animation.restart();
   this.animation.pause();
   this.animHasRun = false;
-  //this.animRunFlag = false;
 }
 
 // Gives element relative positioning if not relative or absolute.
@@ -204,6 +185,9 @@ function assignAnimProps(target) {
   return rtn;
 }
 
+// Return whether this object is to be animated
+// IN or OUT (TweenLite.to or TweenLite.from)
+// when creating the animation object.
 function assignAnimIn(target) {
   for (var itemClass of target.classList) {
     if (itemClass === LIBRARY_BASE_PREFIX + 'out') return false;
@@ -236,6 +220,9 @@ function assignAnimTrigger(target) {
   return DEFAULT_ANIM_TRIGGER;
 }
 
+// Look through the classes in target object.
+// If any classes match a library delay preset, stop and return that value.
+// If no delay class is found, return the default value.
 function assignAnimDelay(target) {
   console.log('%c Assigning animation delay...', 'color: teal');
   for (var itemClass of target.classList) {
@@ -283,14 +270,10 @@ function assignAnimDuration(target) {
   return DEFAULT_ANIM_DURATION;
 }
 
-// Run the animation after any included delay,
-// then flip animHasRun to true, and reset animRunFlag to false.
+// Run the animation after any included delay, then flip animHasRun to true
 function runAnimation(obj) {
-  //console.log("animating...");
-  //console.log(obj);
   TweenLite.delayedCall(obj.animDelay, function(){ obj.animation.play() });
   obj.animHasRun = true;
-  //obj.animRunFlag = false;
 }
 
 function setStartupClassStyles() {
@@ -314,7 +297,7 @@ $(window).on('load', function(){
     obj.watchAnimationTrigger();
   }
 
-  setStartupClassStyles();
+  //setStartupClassStyles();
 
   //console.log('%c Animation Objects Below:', 'color: orange');
   //console.log(animObjectList);
