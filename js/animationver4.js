@@ -85,13 +85,13 @@ function distanceToViewportEdge(edge, element) {
 function distanceToContainerEdge(edge, element) {
   switch (edge) {
     case "top":
-      return $(element).offset().top - $(element).parent().offset().top - $(element).parent().scrollTop();
+      return $(element).parent().offset().top - $(element).offset().top;
     case "bottom":
-      return $(element).position().top - $(element).outerHeight();
+      return $(element).parent().innerHeight() - $(element).offset().top + $(element).parent().offset().top - $(element).height();
     case "left":
-      return ($(element).offset().left - $(element).width() * -1);
+      return $(element).parent().offset().left - $(element).offset().left;
     case "right":
-      return WINDOW_WIDTH - $(element).offset().left;
+      return $(element).parent().innerWidth() - $(element).offset().left + $(element).parent().offset().left - $(element).width();
     default:
       return 0;
   }
@@ -225,13 +225,13 @@ function assignAnimProps(target) {
         $.extend(rtn, { left: String(distanceToViewportEdge("right", target)) + 'px' });
         break;
       case LIBRARY_BASE_PREFIX + 'slide-container-top':
-        $.extend(rtn, { bottom: String(distanceToContainerEdge("top", target)) + 'px' });
+        $.extend(rtn, { top: String(distanceToContainerEdge("top", target)) + 'px' });
         break;
       case LIBRARY_BASE_PREFIX + 'slide-container-bottom':
         $.extend(rtn, { top: String(distanceToContainerEdge("bottom", target)) + 'px' });
         break;
       case LIBRARY_BASE_PREFIX + 'slide-container-left':
-        $.extend(rtn, { right: String(distanceToContainerEdge("left", target)) + 'px' });
+        $.extend(rtn, { left: String(distanceToContainerEdge("left", target)) + 'px' });
         break;
       case LIBRARY_BASE_PREFIX + 'slide-container-right':
         $.extend(rtn, { left: String(distanceToContainerEdge("right", target)) + 'px' });
