@@ -29,13 +29,13 @@ const DEFAULT_ANIM_TRIGGER = 'autoplay',
       DEFAULT_ANIM_EASING = { ease: Power2.easeOut },
       DEFAULT_ANIM_DURATION = 0.5,
       DEFAULT_ANIM_DELAY = 0.2,
-      //DEFAULT_ANIM_PLAYBACK = 'forward',
 
 // Non-default animation values.
       ANIM_PROPS_FADE = { opacity: '0', ease: Power2.easeOut },
-
-      ANIM_PROPS_SLIDE_UP = { top: "-75px", ease: Power3.easeOut },
-      ANIM_PROPS_SLIDE_DOWN = { top: "75px", ease: Power3.easeOut },
+      ANIM_PROPS_SLIDE_TOP = { top: "-75px", ease: Power3.easeOut },
+      ANIM_PROPS_SLIDE_BOTTOM = { top: "75px", ease: Power3.easeOut },
+      ANIM_PROPS_SLIDE_LEFT = { left: "-75px", ease: Power3.easeOut },
+      ANIM_PROPS_SLIDE_RIGHT = { left: "75px", ease: Power3.easeOut },
 
       ANIM_TRIGGER_AUTOPLAY = 'autoplay',
       ANIM_TRIGGER_SCROLL_TO = 'scroll-to',
@@ -65,6 +65,36 @@ var animObjectList;
 // Check if an element with the specified class name exists.
 function elementExists(element) {
   return ($('.' + element).length > 0);
+}
+
+function distanceToViewportEdge(edge, element) {
+  switch (edge) {
+    case "top":
+      return ($(element).offset().top + $(element).height());
+    case "bottom":
+      return WINDOW_HEIGHT - ($(element).offset().top);
+    case "left":
+      return ($(element).offset().left - $(element).width() * -1);
+    case "right":
+      return WINDOW_WIDTH - $(element).offset().left;
+    default:
+      return 0;
+  }
+}
+
+function distanceToContainerEdge(edge, element) {
+  switch (edge) {
+    case "top":
+      return $(element).offset().top - $(element).parent().offset().top - $(element).parent().scrollTop();
+    case "bottom":
+      return $(element).position().top - $(element).outerHeight();
+    case "left":
+      return ($(element).offset().left - $(element).width() * -1);
+    case "right":
+      return WINDOW_WIDTH - $(element).offset().left;
+    default:
+      return 0;
+  }
 }
 
 // ========================================================================= //
@@ -170,11 +200,41 @@ function assignAnimProps(target) {
       case LIBRARY_BASE_PREFIX + 'fade':
         $.extend(rtn, ANIM_PROPS_FADE);
         break;
-      case LIBRARY_BASE_PREFIX + 'slide-up':
-        $.extend(rtn, ANIM_PROPS_SLIDE_UP);
+      case LIBRARY_BASE_PREFIX + 'slide-top':
+        $.extend(rtn, ANIM_PROPS_SLIDE_TOP);
         break;
-      case LIBRARY_BASE_PREFIX + 'slide-down':
-        $.extend(rtn, ANIM_PROPS_SLIDE_DOWN);
+      case LIBRARY_BASE_PREFIX + 'slide-bottom':
+        $.extend(rtn, ANIM_PROPS_SLIDE_BOTTOM);
+        break;
+      case LIBRARY_BASE_PREFIX + 'slide-left':
+        $.extend(rtn, ANIM_PROPS_SLIDE_LEFT);
+        break;
+      case LIBRARY_BASE_PREFIX + 'slide-right':
+        $.extend(rtn, ANIM_PROPS_SLIDE_RIGHT);
+        break;
+      case LIBRARY_BASE_PREFIX + 'slide-edge-top':
+        $.extend(rtn, { bottom: String(distanceToViewportEdge("top", target)) + 'px' });
+        break;
+      case LIBRARY_BASE_PREFIX + 'slide-edge-bottom':
+        $.extend(rtn, { top: String(distanceToViewportEdge("bottom", target)) + 'px' });
+        break;
+      case LIBRARY_BASE_PREFIX + 'slide-edge-left':
+        $.extend(rtn, { right: String(distanceToViewportEdge("left", target)) + 'px' });
+        break;
+      case LIBRARY_BASE_PREFIX + 'slide-edge-right':
+        $.extend(rtn, { left: String(distanceToViewportEdge("right", target)) + 'px' });
+        break;
+      case LIBRARY_BASE_PREFIX + 'slide-container-top':
+        $.extend(rtn, { bottom: String(distanceToContainerEdge("top", target)) + 'px' });
+        break;
+      case LIBRARY_BASE_PREFIX + 'slide-container-bottom':
+        $.extend(rtn, { top: String(distanceToContainerEdge("bottom", target)) + 'px' });
+        break;
+      case LIBRARY_BASE_PREFIX + 'slide-container-left':
+        $.extend(rtn, { right: String(distanceToContainerEdge("left", target)) + 'px' });
+        break;
+      case LIBRARY_BASE_PREFIX + 'slide-container-right':
+        $.extend(rtn, { left: String(distanceToContainerEdge("right", target)) + 'px' });
         break;
       default:
         break;
@@ -280,6 +340,7 @@ function setStartupClassStyles() {
   //$('.' + LIBRARY_BASE_PREFIX + 'fade-out').css('opacity', '1');
   //$('.' + LIBRARY_BASE_PREFIX + 'fade-in.'
   //      + LIBRARY_BASE_PREFIX + 'slide-up').css('top', '75px');
+  //$('body').css('overflow', 'hidden');
 }
 
 // ========================================================================= //
@@ -297,7 +358,7 @@ $(window).on('load', function(){
     obj.watchAnimationTrigger();
   }
 
-  //setStartupClassStyles();
+  setStartupClassStyles();
 
   //console.log('%c Animation Objects Below:', 'color: orange');
   //console.log(animObjectList);
