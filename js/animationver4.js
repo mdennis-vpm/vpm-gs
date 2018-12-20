@@ -32,6 +32,7 @@ const DEFAULT_ANIM_TRIGGER = 'autoplay',
 
 // Non-default animation values.
       ANIM_PROPS_FADE = { opacity: '0', ease: Power2.easeOut },
+
       ANIM_PROPS_SLIDE_TOP = { top: "-75px", ease: Power3.easeOut },
       ANIM_PROPS_SLIDE_BOTTOM = { top: "75px", ease: Power3.easeOut },
       ANIM_PROPS_SLIDE_LEFT = { left: "-75px", ease: Power3.easeOut },

@@ -142,6 +142,16 @@ ul > li > a[href=""] {
   margin-bottom: 0;
 }
 
+.gse-spacer {
+  display: block;
+  width: 100%;
+  background-color: #111122;
+  text-align: center;
+  height: 1200px;
+  position: relative;
+  z-index: 9;
+}
+
 #gse-example {
   font-family: monospace;
   margin-top: 5px;
@@ -153,12 +163,4 @@ ul > li > a[href=""] {
 
 #gse-example > h3 {
   /*font-family: helvetica, arial, sans-serif;*/
-}
-
-.vpa-fade-in {
-
-}
-
-.vpa-fade-out {
-
 }
