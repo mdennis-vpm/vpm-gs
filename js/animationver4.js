@@ -22,6 +22,7 @@ const WINDOW_WIDTH = $(window).width(),
       WINDOW_HEIGHT = $(window).height(),
       LIBRARY_BASE_PREFIX = 'vpa-',
       LIBRARY_BASE_CLASS = '[class*="' + LIBRARY_BASE_PREFIX + '"]';
+      BASE_THROTTLE = 250;
 
 // Default animation property values.
 const DEFAULT_ANIM_TRIGGER = 'autoplay',
@@ -29,6 +30,7 @@ const DEFAULT_ANIM_TRIGGER = 'autoplay',
       DEFAULT_ANIM_EASING = { ease: Power2.easeOut },
       DEFAULT_ANIM_DURATION = 0.5,
       DEFAULT_ANIM_DELAY = 0.2,
+      BASE_CHAIN_DELAY = 0.1,
 
 // Non-default animation values.
       ANIM_PROPS_FADE = { opacity: '0', ease: Power2.easeOut },
@@ -169,14 +171,14 @@ function AnimObj(animTarget) {
   this.animTarget = animTarget;
   this.yMin = $(this.animTarget).offset().top;
   this.yMax = $(this.animTarget).offset().top + $(this.animTarget).innerHeight();
-  console.log("animTarget = " + this.animTarget);
   console.log("yMin = " + this.yMin);
   console.log("yMax = " + this.yMax);
   this.animTo = assignAnimIn(this.animTarget);
-  this.animProps = assignAnimProps(this.animTarget);
-  this.animTrigger = assignAnimTrigger(this.animTarget);
   this.animDuration = assignAnimDuration(this.animTarget);
   this.animDelay = assignAnimDelay(this.animTarget);
+  this.animDelay += addChainDelay(this.animTarget);
+  this.animProps = assignAnimProps(this.animTarget);
+  this.animTrigger = assignAnimTrigger(this.animTarget);
   this.animHasRun = false;
   this.animation =
     this.animTo ?
@@ -203,7 +205,7 @@ AnimObj.prototype.watchAnimationTrigger = function() {
           if (!obj.animHasRun) {
             if (obj.isInViewport()) runAnimation(obj);
           }
-        }, 250));
+        }, BASE_THROTTLE));
       break;
     case ANIM_TRIGGER_FOCUS:
       $(this.animTarget).on('focus', function() {
@@ -278,7 +280,7 @@ function assignAnimProps(target) {
         $.extend(rtn, { bottom: String(distanceToViewportEdge("top", target)) + 'px' });
         break;
       case LIBRARY_BASE_PREFIX + 'slide-edge-bottom':
-        $.extend(rtn, { top: String(distanceToViewportEdge("bottom", target)) + 'px' });
+        //$.extend(rtn, { top: String(distanceToViewportEdge("bottom", target)) + 'px' });
         break;
       case LIBRARY_BASE_PREFIX + 'slide-edge-left':
         $.extend(rtn, { right: String(distanceToViewportEdge("left", target)) + 'px' });
@@ -363,6 +365,19 @@ function assignAnimDelay(target) {
   }
   console.log('%c Done! (Using default delay)', 'color: green');
   return DEFAULT_ANIM_DELAY;
+}
+
+// Look through the classes in target object.
+// If any classes match the chain animation class,
+// stop and return a delay modifier that grows larger based on how many
+// previous siblings are also using the chain class
+function addChainDelay(target) {
+  for (var itemClass of target.classList) {
+    if (itemClass === LIBRARY_BASE_PREFIX + 'chain') {
+      return $(target).prevAll('[class*="' + LIBRARY_BASE_PREFIX + 'chain"]').length * BASE_CHAIN_DELAY;
+    }
+  }
+  return 0;
 }
 
 // Look through the classes in target object.
