@@ -68,6 +68,8 @@ function elementExists(element) {
   return ($('.' + element).length > 0);
 }
 
+// Find and return the distance from element
+// to the specified edge of the viewport
 function distanceToViewportEdge(edge, element) {
   switch (edge) {
     case "top":
@@ -83,6 +85,8 @@ function distanceToViewportEdge(edge, element) {
   }
 }
 
+// Find and return the distance from element
+// to the specified edge of its container
 function distanceToContainerEdge(edge, element) {
   switch (edge) {
     case "top":
@@ -97,6 +101,42 @@ function distanceToContainerEdge(edge, element) {
       return 0;
   }
 }
+
+// Use to throttle firing of a function, prevents functions from potentially
+// firing hundreds or thousands of times in rapid succession
+var _ = {};
+
+_.throttle = function(func, wait, options) {
+  var context, args, result;
+  var timeout = null;
+  var previous = 0;
+  if (!options) options = {};
+  var later = function() {
+    previous = options.leading === false ? 0 : new Date().getTime();
+    timeout = null;
+    result = func.apply(context, args);
+    if (!timeout) context = args = null;
+  };
+  return function() {
+    var now = new Date().getTime();
+    if (!previous && options.leading === false) previous = now;
+    var remaining = wait - (now - previous);
+    context = this;
+    args = arguments;
+    if (remaining <= 0 || remaining > wait) {
+      if (timeout) {
+        clearTimeout(timeout);
+        timeout = null;
+      }
+      previous = now;
+      result = func.apply(context, args);
+      if (!timeout) context = args = null;
+    } else if (!timeout && options.trailing !== false) {
+      timeout = setTimeout(later, remaining);
+    }
+    return result;
+  };
+};
 
 // ========================================================================= //
 // =====  ===== //
@@ -127,6 +167,11 @@ function createAnimationObjects(sourceList) {
 // Initialize constructor function for a new Animation Object.
 function AnimObj(animTarget) {
   this.animTarget = animTarget;
+  this.yMin = $(this.animTarget).offset().top;
+  this.yMax = $(this.animTarget).offset().top + $(this.animTarget).innerHeight();
+  console.log("animTarget = " + this.animTarget);
+  console.log("yMin = " + this.yMin);
+  console.log("yMax = " + this.yMax);
   this.animTo = assignAnimIn(this.animTarget);
   this.animProps = assignAnimProps(this.animTarget);
   this.animTrigger = assignAnimTrigger(this.animTarget);
@@ -148,10 +193,17 @@ AnimObj.prototype.watchAnimationTrigger = function() {
 
   switch (this.animTrigger) {
     case ANIM_TRIGGER_AUTOPLAY:
-      if (!this.animHasRun) runAnimation(obj);
+      if (!obj.animHasRun) runAnimation(obj);
       break;
     case ANIM_TRIGGER_SCROLL_TO:
-      // TODO
+      if (!obj.animHasRun) {
+        if (obj.isInViewport()) runAnimation(obj);
+      }
+      $(window).on('scroll', _.throttle(function(){
+          if (!obj.animHasRun) {
+            if (obj.isInViewport()) runAnimation(obj);
+          }
+        }, 250));
       break;
     case ANIM_TRIGGER_FOCUS:
       $(this.animTarget).on('focus', function() {
@@ -187,6 +239,15 @@ AnimObj.prototype.resetAnimation = function() {
 AnimObj.prototype.setElementPosition = function() {
   if (this.animTarget.style.position !== 'relative' || 'absolute') this.animTarget.style.position = 'relative';
 }
+
+// Use to check if any part of an item is currently visible in the viewport
+AnimObj.prototype.isInViewport = function() {
+  console.log("checking if in viewport...");
+  var bMod = $(window).height() / 3;
+  var viewportTop = $(window).scrollTop() + bMod;
+  var viewportBottom = $(window).scrollTop() + $(window).height() - bMod;
+  return this.yMax > viewportTop && this.yMin < viewportBottom;
+};
 
 // Look through the classes in target object.
 // If any classes match a library animation property preset,
