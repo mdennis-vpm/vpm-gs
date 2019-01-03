@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <h1>Fade In</h1>
+
+    <a class="gse-return" href="index.html">&#x276E;&#x276E; Go Back</a>
+
+    <div class="gse-container">
+      <div class="gse-container--controls">
+        <button onclick='gseReset()'>RESET</button>
+        <button onclick='gsePlay()'>PLAY</button>
+        <button onclick='gseReplay()'>REPLAY</button>
+      </div>
+      <div id="gse-container--showcase">
+        <div class="gse-spacerx">&nbsp;</div>
+        <div class="gse-inline-block vpa-fade vpa-slide-edge-top vpa-slide-container-right vpa-out">
+          <img class="decoy" src="http://via.placeholder.com/350x225/BBCCEE/080810?text=.vpa-fade-in">
+          <!--p>vpa-fade-in<br>vpa-on-scroll-up<br>vpa-xslow</p-->
+        </div>
+        <div class="gse-inline-block vpa-fade vpa-slide-top">
+          <img src="http://via.placeholder.com/350x550/BBCCEE/080810?text=.vpa-fade-in">
+          <!--p>vpa-fade-in-slide-up<br>vpa-on-hover<br>vpa-delay-none</p-->
+        </div>
+        <div class="gse-inline-block vpa-fade vpa-slide-top vpa-out">
+          <img src="http://via.placeholder.com/350x425/BBCCEE/080810?text=.vpa-fade-in">
+          <!--p>vpa-fade-in<br>vpa-on-click<br>vpa-delay-short<br>vpa-fast<br>vpa-reverse</p-->
+        </div>
+        <div class="gse-spacerx">&nbsp;</div>
+      </div>
+    </div>
+
+    <div class="gse-container">
+      <div class="gse-description">
+          <p><strong>"Fade In"</strong> animation, enabled by adding the class <em>.gs-fade-in</em> to an element.</p>
+          <p>
+            Element will begin with opacity of 0.
+            When triggered, the element will fade in to full opacity.
+            By default, animation eases out.
+          </p>
+      </div>
+    </div>
+
+    <div class="gse-container">
+      <div id="gse-example">
+        <h3>Example as HTML:</h3>
+        <div id="gse-strip">
+          <div class="vpa-fade-in"> ...CONTENT... </div>
+        </div>
+      </div>
+    </div>
+
+    <!--JQuery-->
+    <script src="../js/jquery-3.3.1.min.js"></script>
+
+    <!--CDN link for TweenLite-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/TweenLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/easing/EasePack.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
+
+    <!--VPM Animation Library-->
+    <script src="../js/animationver4.js"></script>
+
+    <!--Example Control Script-->
+    <script src="controlsver2.js"></script>
+  </body>
+</html>

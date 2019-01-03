@@ -48,7 +48,6 @@ function getObj(item) {
 //  ]
 
 // Common/Reusable animation property sets
-
 var standardUpTween = {
   top: "75px",
   opacity: "0",
@@ -61,7 +60,7 @@ var standardDownTween = {
   ease: Power3.easeOut
 };
 
-var flatFadeInOut = {
+var fadeIn = {
   opacity: "0",
   ease: Power2.easeOut
 };
@@ -130,7 +129,7 @@ var animationElements = [
     element: 'gs-fade-in',
     animTarget: "class",
     animOn: "scrollTo",
-    animProps: flatFadeInOut,
+    animProps: fadeIn,
     animTime: 0.5,
     animDelay: 0.2
   }

@@ -119,6 +119,10 @@ ul > li > a[href=""] {
   width: 100%;
 }
 
+#gse-container--showcase > div {
+  position: relative;
+}
+
 .gse-description {
   margin-top: 5px;
   padding: 50px;
@@ -136,6 +140,16 @@ ul > li > a[href=""] {
 
 .gse-description > p:last-child {
   margin-bottom: 0;
+}
+
+.gse-spacer {
+  display: block;
+  width: 100%;
+  background-color: #111122;
+  text-align: center;
+  height: 1200px;
+  position: relative;
+  z-index: 9;
 }
 
 #gse-example {
