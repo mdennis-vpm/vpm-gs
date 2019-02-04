@@ -420,12 +420,7 @@ function setStartupClassStyles() {
   //$('body').css('overflow', 'hidden');
 }
 
-// ========================================================================= //
-// ===== On Load ===== //
-
-//setStartupClassStyles();
-
-$(window).on('load', function(){
+function initializeAnimationLibrary() {
   animTargetList = getElementList(LIBRARY_BASE_CLASS);
   animObjectList = createAnimationObjects(animTargetList);
 
@@ -434,8 +429,16 @@ $(window).on('load', function(){
     obj.resetAnimation();
     obj.watchAnimationTrigger();
   }
+}
 
-  setStartupClassStyles();
+// ========================================================================= //
+// ===== On Load ===== //
+
+//setStartupClassStyles();
+
+$(window).on('load', function(){
+
+  initializeAnimationLibrary();
 
   //console.log('%c Animation Objects Below:', 'color: orange');
   //console.log(animObjectList);
