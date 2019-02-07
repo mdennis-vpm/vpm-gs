@@ -21,7 +21,7 @@
 const WINDOW_WIDTH = $(window).width(),
       WINDOW_HEIGHT = $(window).height(),
       LIBRARY_BASE_PREFIX = 'vpa-',
-      LIBRARY_BASE_CLASS = '[class*="' + LIBRARY_BASE_PREFIX + '"]';
+      LIBRARY_BASE_CLASS = '[class*="' + LIBRARY_BASE_PREFIX + '"]',
       BASE_THROTTLE = 250;
 
 // Default animation property values.
@@ -197,7 +197,7 @@ function getElementList(searchClass) {
 // Create an object for each item in the given array,
 // push each new object into return array.
 function createAnimationObjects(sourceList) {
-  rtn = [];
+  var rtn = [];
   sourceList.forEach(function(item) {
     rtn.push(new AnimObj(item));
   });
