@@ -264,7 +264,7 @@ AnimObj.prototype.watchAnimationTrigger = function() {
       $(this.animTarget).on('mouseleave focusout', _.throttle(function() {
         //console.log("asd: " + (obj.animDuration + obj.animDelay) * 1000);
         //if (obj.animHasRun && obj.animIsSelfReversing && obj.animation.progress() === 1) reverseAnimation(obj);
-      }, (obj.animDuration + obj.animDelay) * 000));
+      }, (obj.animDuration + obj.animDelay) * 0));
       break;
     case ANIM_TRIGGER_CLICK:
       $(this.animTarget).on('click', function() {
