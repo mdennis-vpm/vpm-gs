@@ -52,9 +52,13 @@ const DEFAULT_ANIM_TRIGGER = 'autoplay',
       ANIM_ROTATE_COUNTER_CLOCKWISE_HALF = { rotation: 180 },
       ANIM_ROTATE_COUNTER_CLOCKWISE_QUARTER = { rotation: 90 },
 
-      ANIM_COINSPIN_1 = { rotationY: "360" },
-      ANIM_COINSPIN_2 = { rotationY: "720" },
-      ANIM_COINSPIN_3 = { rotationY: "1080" },
+      ANIM_COINSPIN_X = { rotationX: "360" },
+      ANIM_COINSPIN_X2 = { rotationX: "720" },
+      ANIM_COINSPIN_X3 = { rotationX: "1080" },
+
+      ANIM_COINSPIN_Y = { rotationY: "360" },
+      ANIM_COINSPIN_Y2 = { rotationY: "720" },
+      ANIM_COINSPIN_Y3 = { rotationY: "1080" },
 
       ANIM_TRIGGER_AUTOPLAY = 'autoplay',
       ANIM_TRIGGER_SCROLL_TO = 'scroll-to',
@@ -378,14 +382,11 @@ function assignAnimProps(target) {
       case LIBRARY_BASE_PREFIX + 'rotate-ccw-90':
         $.extend(rtn, ANIM_ROTATE_COUNTER_CLOCKWISE_QUARTER);
         break;
-      case LIBRARY_BASE_PREFIX + 'coinspin':
-        $.extend(rtn, ANIM_COINSPIN_1);
+      case LIBRARY_BASE_PREFIX + 'coinspin-x':
+        $.extend(rtn, ANIM_COINSPIN_X);
         break;
-      case LIBRARY_BASE_PREFIX + 'coinspin-2':
-        $.extend(rtn, ANIM_COINSPIN_2);
-        break;
-      case LIBRARY_BASE_PREFIX + 'coinspin-3':
-        $.extend(rtn, ANIM_COINSPIN_3);
+      case LIBRARY_BASE_PREFIX + 'coinspin-y':
+        $.extend(rtn, ANIM_COINSPIN_Y);
         break;
       default:
         break;
@@ -460,27 +461,6 @@ function assignAnimDelay(target) {
   }
   console.log('%c Done! (Using default delay)', 'color: green');
   return DEFAULT_ANIM_DELAY;
-}
-
-// Look through the classes in target object.
-// If any classes match a library easing preset, stop and return that value.
-// If no easing class is found, return the default value.
-function assignAnimEasing(target) {
-  console.log('%c Assigning animation easing...', 'color: teal');
-  for (var itemClass of target.classList) {
-    switch (itemClass) {
-      case LIBRARY_BASE_PREFIX + 'ease-bounce':
-        return ANIM_EASE_BOUNCE;
-      case LIBRARY_BASE_PREFIX + 'ease-elastic':
-        return ANIM_EASE_ELASTIC;
-      case LIBRARY_BASE_PREFIX + 'ease-overshoot':
-        return ANIM_EASE_BACK;
-      default:
-        break;
-    }
-  }
-  console.log('%c Done! (Using default easing)', 'color: green');
-  return DEFAULT_ANIM_EASING;
 }
 
 // Look through the classes in target object.

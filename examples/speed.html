@@ -5,7 +5,7 @@
   </head>
 
   <body>
-    <h1>Rotate (.vpa-rotate-___-___ )</h1>
+    <h1>Speed (.vpa-___ )</h1>
 
     <a class="gse-return" href="index.html">&#x276E;&#x276E; Go Back</a>
 
@@ -16,52 +16,55 @@
         <button onclick='gseReplay()'>REPLAY</button>
       </div>
       <div id="gse-container--showcase">
-        <div class="gse-inline-block vpa-rotate-cw-90">
+        <div class="gse-inline-block vpa-xfast vpa-rotate-cw-360">
           <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
-          <p>.vpa-rotate-cw-90</p>
+          <p>.vpa-xfast<br>.vpa-rotate-cw-360</p>
         </div>
-        <div class="gse-inline-block vpa-rotate-cw-180">
+        <div class="gse-inline-block vpa-fast vpa-rotate-cw-360">
           <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
-          <p>.vpa-rotate-cw-180</p>
+          <p>.vpa-fast<br>.vpa-rotate-cw-360</p>
         </div>
         <div class="gse-inline-block vpa-rotate-cw-360">
           <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
           <p>.vpa-rotate-cw-360</p>
         </div>
         <div>&nbsp;</div>
-        <div class="gse-inline-block vpa-rotate-ccw-90">
+        <div class="gse-inline-block vpa-slow vpa-rotate-cw-360">
           <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
-          <p>.vpa-rotate-ccw-90</p>
+          <p>.vpa-slow<br>.vpa-rotate-cw-360</p>
         </div>
-        <div class="gse-inline-block vpa-rotate-ccw-180">
+        <div class="gse-inline-block vpa-xslow vpa-rotate-cw-360">
           <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
-          <p>.vpa-rotate-ccw-180</p>
+          <p>.vpa-xslow<br>.vpa-rotate-cw-360</p>
         </div>
-        <div class="gse-inline-block vpa-rotate-ccw-360">
+        <div class="gse-inline-block vpa-xxslow vpa-rotate-cw-360">
           <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
-          <p>.vpa-rotate-ccw-360</p>
+          <p>.vpa-xxslow<br>.vpa-rotate-cw-360</p>
+        </div>
+        <div class="gse-inline-block vpa-xxxslow vpa-rotate-cw-360">
+          <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
+          <p>.vpa-xxxslow<br>.vpa-rotate-cw-360</p>
         </div>
       </div>
     </div>
 
     <div class="gse-container">
       <div class="gse-description">
-          <p><strong>"Rotate"</strong> animation, enabled by adding the class <em>.vpa-rotate-(direction)-(degrees)</em> to an element. There are 6 total options:</p>
+          <p><strong>"Speed"</strong> modifier, enabled by adding the class <em>.vpa-(speed)</em> to an element. There are 6 total options:</p>
           <ul>
-            <li>.vpa-rotate-cw-90</li>
-            <li>.vpa-rotate-cw-180</li>
-            <li>.vpa-rotate-cw-360</li>
-            <li>.vpa-rotate-ccw-90</li>
-            <li>.vpa-rotate-ccw-180</li>
-            <li>.vpa-rotate-ccw-360</li>
+            <li>.vpa-xfast = 0.1s duration</li>
+            <li>.vpa-fast = 0.25s duration</li>
+            <li>.vpa-slow = 1s duration</li>
+            <li>.vpa-xslow = 2s duration</li>
+            <li>.vpa-xxslow = 3s duration</li>
+            <li>.vpa-xxxslow = 5s duration</li>
           </ul>
-          <p>cw = clockwise<br>ccw = counter-clockwise</p>
+          <p>Without using any of these, the default duration of 0.5s is used.</p>
           <p>
-            Element will begin rotated by the given amount in the opposite direction given.<br>
-            When triggered, the element will rotate into place, in the given direction.
+            Changes the duration of the animation from default, to the given one.
           </p>
           <p>
-            (In tandem with <em>.vpa-out</em> class, element will instead rotate OUT of orientation, in the opposite direction given.)
+            (The <em>.vpa-out</em> class has no impact on this property)
           </p>
       </div>
     </div>
@@ -70,12 +73,13 @@
       <div id="gse-example">
         <h3>Example as HTML:</h3>
         <div id="gse-strip">
-          <div class="vpa-rotate-cw-90"> ...CONTENT... </div>+
-          <div class="vpa-rotate-cw-180"> ...CONTENT... </div>+
+          <div class="vpa-xfast vpa-rotate-cw-360"> ...CONTENT... </div>+
+          <div class="vpa-fast vpa-rotate-cw-360"> ...CONTENT... </div>+
+          <div class="vpa-slow vpa-rotate-cw-360"> ...CONTENT... </div>+
           <div class="vpa-rotate-cw-360"> ...CONTENT... </div>+
-          <div class="vpa-rotate-ccw-90"> ...CONTENT... </div>+
-          <div class="vpa-rotate-ccw-180"> ...CONTENT... </div>+
-          <div class="vpa-rotate-ccw-360"> ...CONTENT... </div>
+          <div class="vpa-xslow vpa-rotate-cw-360"> ...CONTENT... </div>+
+          <div class="vpa-xxslow vpa-rotate-cw-360"> ...CONTENT... </div>+
+          <div class="vpa-xxxslow vpa-rotate-cw-360"> ...CONTENT... </div>
         </div>
       </div>
     </div>
