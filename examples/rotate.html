@@ -1,0 +1,94 @@
+<head>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>Rotate (.vpa-rotate-___-___ )</h1>
+
+  <a class="gse-return" href="index.html">&#x276E;&#x276E; Go Back</a>
+
+  <div class="gse-container">
+    <div class="gse-container--controls">
+      <button onclick='gseReset()'>RESET</button>
+      <button onclick='gsePlay()'>PLAY</button>
+      <button onclick='gseReplay()'>REPLAY</button>
+    </div>
+    <div id="gse-container--showcase">
+      <div class="gse-inline-block vpa-rotate-cw-90">
+        <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
+        <p>.vpa-rotate-cw-90</p>
+      </div>
+      <div class="gse-inline-block vpa-rotate-cw-180">
+        <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
+        <p>.vpa-rotate-cw-180</p>
+      </div>
+      <div class="gse-inline-block vpa-rotate-cw-360">
+        <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
+        <p>.vpa-rotate-cw-360</p>
+      </div>
+      <div>&nbsp;</div>
+      <div class="gse-inline-block vpa-rotate-ccw-90">
+        <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
+        <p>.vpa-rotate-ccw-90</p>
+      </div>
+      <div class="gse-inline-block vpa-rotate-ccw-180">
+        <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
+        <p>.vpa-rotate-ccw-180</p>
+      </div>
+      <div class="gse-inline-block vpa-rotate-ccw-360">
+        <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
+        <p>.vpa-rotate-ccw-360</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="gse-container">
+    <div class="gse-description">
+        <p><strong>"Rotate"</strong> animation, enabled by adding the class <em>.vpa-rotate-(direction)-(degrees)</em> to an element. There are 6 total options:</p>
+        <ul>
+          <li>.vpa-rotate-cw-90</li>
+          <li>.vpa-rotate-cw-180</li>
+          <li>.vpa-rotate-cw-360</li>
+          <li>.vpa-rotate-ccw-90</li>
+          <li>.vpa-rotate-ccw-180</li>
+          <li>.vpa-rotate-ccw-360</li>
+        </ul>
+        <p>cw = clockwise<br>ccw = counter-clockwise</p>
+        <p>
+          Element will begin rotated by the given amount in the opposite direction given.<br>
+          When triggered, the element will rotate into place, in the given direction.
+        </p>
+        <p>
+          (In tandem with <em>.vpa-out</em> class, element will instead rotate OUT of orientation, in the opposite direction given.)
+        </p>
+    </div>
+  </div>
+
+  <div class="gse-container">
+    <div id="gse-example">
+      <h3>Example as HTML:</h3>
+      <div id="gse-strip">
+        <div class="vpa-rotate-cw-90"> ...CONTENT... </div>
+        <div class="vpa-rotate-cw-180"> ...CONTENT... </div>
+        <div class="vpa-rotate-cw-360"> ...CONTENT... </div>
+        <div class="vpa-rotate-ccw-90"> ...CONTENT... </div>
+        <div class="vpa-rotate-ccw-180"> ...CONTENT... </div>
+        <div class="vpa-rotate-ccw-360"> ...CONTENT... </div>
+      </div>
+    </div>
+  </div>
+
+  <!--JQuery-->
+  <script src="../js/jquery-3.3.1.min.js"></script>
+
+  <!--CDN link for TweenLite-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/TweenLite.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/easing/EasePack.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
+
+  <!--VPM Animation Library-->
+  <script src="../js/animation.js"></script>
+
+  <!--Example Control Script-->
+  <script src="controls.js"></script>
+</body>
