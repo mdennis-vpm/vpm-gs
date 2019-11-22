@@ -1,0 +1,84 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <h1>Slide From Viewport Edge (.vpa-slide-edge-___ )</h1>
+
+    <a class="gse-return" href="index.html">&#x276E;&#x276E; Go Back</a>
+
+    <div class="gse-container">
+      <div class="gse-container--controls">
+        <button onclick='gseReset()'>RESET</button>
+        <button onclick='gsePlay()'>PLAY</button>
+        <button onclick='gseReplay()'>REPLAY</button>
+      </div>
+      <div id="gse-container--showcase">
+        <div class="gse-inline-block vpa-slide-edge-top">
+          <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
+          <p>.vpa-slide-edge-top</p>
+        </div>
+        <div class="gse-inline-block vpa-slide-edge-right">
+          <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
+          <p>.vpa-slide-edge-right</p>
+        </div>
+        <div class="gse-inline-block vpa-slide-edge-left">
+          <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
+          <p>.vpa-slide-edge-left</p>
+        </div>
+        <div class="gse-inline-block vpa-slide-edge-right vpa-slide-edge-top">
+          <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
+          <p>.vpa-slide-edge-right<br>.vpa-slide-edge-top</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="gse-container">
+      <div class="gse-description">
+        <p><strong>"Slide"</strong> animation, enabled by adding the class <em>.vpa-slide-edge-(direction)</em> to an element. There are three options:</p>
+          <ul>
+            <li>.vpa-slide-edge-top</li>
+            <li>.vpa-slide-edge-right</li>
+            <li>.vpa-slide-edge-left</li>
+          </ul>
+          <p>
+            Element will start just beyond the viewport edge of the given direction.<br>
+            When triggered, the element will slide into place from that starting point.<br>
+            "edge-bottom" is not an option, due to causing scrollbar/scroll position issues.<br>
+            All slide classes can be combined.
+          </p>
+          <p>
+            (In tandem with <em>.vpa-out</em> class, element will instead slide OUT to the given edge of the viewport.)
+          </p>
+      </div>
+    </div>
+
+    <div class="gse-container">
+      <div id="gse-example">
+        <h3>Example as HTML:</h3>
+        <div id="gse-strip">
+          <div class="vpa-slide-edge-top"> ...CONTENT... </div>+
+          <div class="vpa-slide-edge-right"> ...CONTENT... </div>+
+          <div class="vpa-slide-edge-left"> ...CONTENT... </div>+
+          <div class="vpa-slide-edge-right vpa-slide-edge-top"> ...CONTENT... </div>
+        </div>
+      </div>
+    </div>
+
+    <!--JQuery-->
+    <script src="../js/jquery-3.3.1.min.js"></script>
+
+    <!--CDN link for TweenLite-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/TweenLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/easing/EasePack.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
+
+    <!--VPM Animation Library-->
+    <script src="../js/animation.js"></script>
+
+    <!--Example Control Script-->
+    <script src="controls.js"></script>
+  </body>
+</html>

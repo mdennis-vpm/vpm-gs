@@ -3,7 +3,7 @@
 </head>
 
 <body>
-  <h1>Fade In & Slide Up</h1>
+  <h1>Fade (.vpa-fade)</h1>
 
   <a class="gse-return" href="index.html">&#x276E;&#x276E; Go Back</a>
 
@@ -14,20 +14,22 @@
       <button onclick='gseReplay()'>REPLAY</button>
     </div>
     <div id="gse-container--showcase">
-      <div class="gs-fade-in-slide-up">
-        <img src="http://via.placeholder.com/350x225/BBCCEE/080810?text=.gs-fade-in-slide-up">
-        <p>Lorem ipsum dolor sit amet</p>
+      <div class="vpa-fade">
+        <img src="http://via.placeholder.com/350x225/BBCCEE/080810?text=Lorem%20Ipsum">
+        <p>.vpa-fade</p>
       </div>
     </div>
   </div>
 
   <div class="gse-container">
     <div class="gse-description">
-        <p><strong>"Fade In & Slide Up"</strong> animation, enabled by adding the class <em>.gs-fade-in-slide-up</em> to an element.</p>
+        <p><strong>"Fade"</strong> animation, enabled by adding the class <em>.vpa-fade</em> to an element.</p>
         <p>
-          Element will begin with opacity of 0, and 75px below it's actual location.
-          When triggered, the element will slide up into place, while fading in to full opacity.
-          By default, animation eases out.
+          Element will begin with opacity of 0.<br>
+          When triggered, the element will fade in to full opacity.
+        </p>
+        <p>
+          (In tandem with <em>.vpa-out</em> class, element will instead fade OUT.)
         </p>
     </div>
   </div>
@@ -36,7 +38,7 @@
     <div id="gse-example">
       <h3>Example as HTML:</h3>
       <div id="gse-strip">
-        <div class="gs-fade-in-slide-up"> ...CONTENT... </div>
+        <div class="vpa-fade"> ...CONTENT... </div>
       </div>
     </div>
   </div>

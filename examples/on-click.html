@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <h1>On-Click (.vpa-on-click)</h1>
+
+    <a class="gse-return" href="index.html">&#x276E;&#x276E; Go Back</a>
+
+    <div class="gse-container">
+      <div class="gse-container--controls">
+        <button onclick='gseReset()'>RESET</button>
+        <button onclick='gsePlay()'>PLAY</button>
+        <button onclick='gseReplay()'>REPLAY</button>
+      </div>
+      <div id="gse-container--showcase">
+        <div class="gse-inline-block vpa-on-click vpa-slide-top">
+          <img src="http://via.placeholder.com/350x225/BBCCEE/080810?text=Lorem%20Ipsum">
+          <p>.vpa-on-click<br>.vpa-slide-top</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="gse-container">
+      <div class="gse-description">
+        <p><strong>"On-click"</strong> animation trigger, enabled by adding the class <em>.vpa-on-click</em> to an element.</p>
+          <p>
+            Sets the animation to trigger and play when the element is clicked or tapped.<br>
+          </p>
+          <p>
+            (The <em>.vpa-out</em> class has no impact on this property)
+          </p>
+      </div>
+    </div>
+
+    <div class="gse-container">
+      <div id="gse-example">
+        <h3>Example as HTML:</h3>
+        <div id="gse-strip">
+          <div class="vpa-on-click vpa-slide-top"> ...CONTENT... </div>
+        </div>
+      </div>
+    </div>
+
+    <!--JQuery-->
+    <script src="../js/jquery-3.3.1.min.js"></script>
+
+    <!--CDN link for TweenLite-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/TweenLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/easing/EasePack.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
+
+    <!--VPM Animation Library-->
+    <script src="../js/animation.js"></script>
+
+    <!--Example Control Script-->
+    <script src="controls.js"></script>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+  </head>
+
+  <body>
+    <h1>Elastic (.vpa-elastic)</h1>
+
+    <a class="gse-return" href="index.html">&#x276E;&#x276E; Go Back</a>
+
+    <div class="gse-container">
+      <div class="gse-container--controls">
+        <button onclick='gseReset()'>RESET</button>
+        <button onclick='gsePlay()'>PLAY</button>
+        <button onclick='gseReplay()'>REPLAY</button>
+      </div>
+      <div id="gse-container--showcase">
+        <div class="gse-inline-block vpa-slide-edge-top vpa-slow vpa-elastic">
+          <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
+          <p>.vpa-slide-edge-top<br>.vpa-slow<br>.vpa-elastic</p>
+        </div>
+        <div class="gse-inline-block vpa-rotate-cw-360 vpa-xslow vpa-elastic">
+          <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
+          <p>.vpa-rotate-cw-360<br>.vpa-xslow<br>.vpa-elastic</p>
+        </div>
+        <div class="gse-inline-block vpa-slide-bottom vpa-coinspin-y vpa-xslow vpa-elastic">
+          <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem%20Ipsum">
+          <p>.vpa-slide-bottom<br>.vpa-coinspin-y<br>.vpa-xslow<br>.vpa-elastic</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="gse-container">
+      <div class="gse-description">
+        <p><strong>"Elastic"</strong> effect, enabled by adding the class <em>.vpa-elastic</em> to an element.</p>
+          <p>
+            Overrides the default easing, and applies an elastic effect to animation.<br>
+          </p>
+          <p>
+            (The <em>.vpa-out</em> class has no impact on this property)
+          </p>
+      </div>
+    </div>
+
+    <div class="gse-container">
+      <div id="gse-example">
+        <h3>Example as HTML:</h3>
+        <div id="gse-strip">
+          <div class="vpa-slide-edge-top vpa-slow vpa-elastic"> ...CONTENT... </div>+
+          <div class="vpa-rotate-cw-360 vpa-xslow vpa-elastic"> ...CONTENT... </div>+
+          <div class="vpa-slide-bottom vpa-coinspin-y vpa-xslow vpa-elastic"> ...CONTENT... </div>
+        </div>
+      </div>
+    </div>
+
+    <!--JQuery-->
+    <script src="../js/jquery-3.3.1.min.js"></script>
+
+    <!--CDN link for TweenLite-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/TweenLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/easing/EasePack.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
+
+    <!--VPM Animation Library-->
+    <script src="../js/animation.js"></script>
+
+    <!--Example Control Script-->
+    <script src="controls.js"></script>
+  </body>
+</html>

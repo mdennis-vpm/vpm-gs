@@ -1,77 +1,88 @@
-<head>
-  <link rel="stylesheet" href="style.css">
-</head>
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <link rel="stylesheet" href="style.css">
+  </head>
 
-<body>
-  <h1>Chain</h1>
+  <body>
+    <h1>Chain</h1>
 
-  <a class="gse-return" href="index.html">&#x276E;&#x276E; Go Back</a>
+    <a class="gse-return" href="index.html">&#x276E;&#x276E; Go Back</a>
 
-  <div class="gse-container">
-    <div class="gse-container--controls">
-      <button onclick='gseReset()'>RESET</button>
-      <button onclick='gsePlay()'>PLAY</button>
-      <button onclick='gseReplay()'>REPLAY</button>
-    </div>
-    <div id="gse-container--showcase">
-      <div class="gse-inline-block gs-fade-in-slide-up gs-chain">
-        <img src="http://via.placeholder.com/350x225/BBCCEE/080810?text=.gs-chain+1">
-        <p>Lorem ipsum dolor sit amet</p>
+    <div class="gse-container">
+      <div class="gse-container--controls">
+        <button onclick='gseReset()'>RESET</button>
+        <button onclick='gsePlay()'>PLAY</button>
+        <button onclick='gseReplay()'>REPLAY</button>
       </div>
-      <div class="gse-inline-block gs-fade-in-slide-up gs-chain">
-        <img src="http://via.placeholder.com/350x225/BBCCEE/080810?text=.gs-chain+2">
-        <p>Lorem ipsum dolor sit amet</p>
-      </div>
-      <div class="gse-inline-block gs-fade-in-slide-up gs-chain">
-        <img src="http://via.placeholder.com/350x225/BBCCEE/080810?text=.gs-chain+3">
-        <p>Lorem ipsum dolor sit amet</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="gse-container">
-    <div class="gse-description">
-        <p>
-          <strong>"Chain"</strong> animation enhancement, enabled by adding
-          the class <em>.gs-chain</em> to elements with an animation class.
-        </p>
-        <p>
-          With <em>.gs-chain</em>, any elements with animation classes,
-          which are directly adjacent siblings in the html,
-          will animate with progressively larger offsets than the element before it.
-          This gives a chaining animation effect.
-        </p>
-        <p>
-          <strong>Note: </strong>
-          This offset is NOT applied on mobile (viewport width smaller than 992px).
-        </p>
-    </div>
-  </div>
-
-  <div class="gse-container">
-    <div id="gse-example">
-      <h3>Example as HTML:</h3>
-      <div id="gse-strip">
-        <div class="example-container">+
-          _<div class="gs-fade-in-slide-up gs-chain"> ...CONTENT... </div>+
-          _<div class="gs-fade-in-slide-up gs-chain"> ...CONTENT... </div>+
-          _<div class="gs-fade-in-slide-up gs-chain"> ...CONTENT... </div>+
+      <div id="gse-container--showcase">
+        <div class="gse-inline-block vpa-fade vpa-slide-bottom vpa-chain">
+          <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem+Ipsum">
+          <p>.vpa-fade<br>.vpa-slide-bottom<br>.vpa-chain</p>
+        </div>
+        <div class="gse-inline-block vpa-fade vpa-slide-bottom vpa-chain">
+          <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem+Ipsum">
+          <p>.vpa-fade<br>.vpa-slide-bottom<br>.vpa-chain</p>
+        </div>
+        <div class="gse-inline-block vpa-fade vpa-slide-bottom vpa-chain">
+          <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem+Ipsum">
+          <p>.vpa-fade<br>.vpa-slide-bottom<br>.vpa-chain</p>
+        </div>
+        <div class="gse-inline-block vpa-fade vpa-slide-bottom vpa-chain">
+          <img src="http://via.placeholder.com/250x225/BBCCEE/080810?text=Lorem+Ipsum">
+          <p>.vpa-fade<br>.vpa-slide-bottom<br>.vpa-chain</p>
         </div>
       </div>
     </div>
-  </div>
 
-  <!--JQuery-->
-  <script src="../js/jquery-3.3.1.min.js"></script>
+    <div class="gse-container">
+      <div class="gse-description">
+          <p>
+            <strong>"Chain"</strong> animation enhancement, enabled by adding
+            the class <em>.vpa-chain</em> to elements with an animation class.
+          </p>
+          <p>
+            With <em>.vpa-chain</em>, any elements with animation classes,
+            which are directly adjacent siblings in the html,
+            will animate with progressively larger offsets than the element before it.
+            This gives a chaining animation effect.
+          </p>
+          <p>
+            <strong>Note: </strong>
+            This offset is NOT applied on mobile (viewport width smaller than 992px).
+          </p>
+          <p>
+            (The <em>.vpa-out</em> class has no impact on this property)
+          </p>
+      </div>
+    </div>
 
-  <!--CDN link for TweenLite-->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/TweenLite.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/easing/EasePack.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
+    <div class="gse-container">
+      <div id="gse-example">
+        <h3>Example as HTML:</h3>
+        <div id="gse-strip">
+          <div class="example-container">+
+            _<div class="vpa-fade vpa-slide-bottom vpa-chain"> ...CONTENT... </div>+
+            _<div class="vpa-fade vpa-slide-bottom vpa-chain"> ...CONTENT... </div>+
+            _<div class="vpa-fade vpa-slide-bottom vpa-chain"> ...CONTENT... </div>+
+            _<div class="vpa-fade vpa-slide-bottom vpa-chain"> ...CONTENT... </div>+
+          </div>
+        </div>
+      </div>
+    </div>
 
-  <!--VPM Animation Library-->
-  <script src="../js/animation.js"></script>
+    <!--JQuery-->
+    <script src="../js/jquery-3.3.1.min.js"></script>
 
-  <!--Example Control Script-->
-  <script src="controls.js"></script>
-</body>
+    <!--CDN link for TweenLite-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/TweenLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/2.0.0/easing/EasePack.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/plugins/CSSPlugin.min.js"></script>
+
+    <!--VPM Animation Library-->
+    <script src="../js/animation.js"></script>
+
+    <!--Example Control Script-->
+    <script src="controls.js"></script>
+  </body>
+</html>
